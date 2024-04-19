@@ -17,7 +17,7 @@ class Pemilik
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user()->role != 'pemilik'){
-            return redirect('dashboard');
+            abort(Response::HTTP_FORBIDDEN);
         }
         return $next($request);
     }

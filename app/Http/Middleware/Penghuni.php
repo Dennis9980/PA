@@ -17,7 +17,7 @@ class Penghuni
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user()->role != 'penghuni'){
-            return redirect('dashboard');
+            abort(Response::HTTP_FORBIDDEN);
         }
         return $next($request);
     }

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Pengurus
+class Gabungan
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class Pengurus
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->role != 'pengurus'){
+        if(Auth::user()->role != 'pemilik' && Auth::user()->role != 'pengurus'){
             abort(Response::HTTP_FORBIDDEN);
         }
         return $next($request);

@@ -19,13 +19,42 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+Route::middleware(['auth', 'gabungan'])->group(function () {
+    Route::get('data-penghuni', function(){
+        return view('layouts.datapenghuni');
+    })->name('dataPenghuni');
+    Route::get('data-laundry', function(){
+        return view('layouts.dataLaundry');
+    })->name('dataLaundry');
+    Route::get('data-kebersihan', function(){
+        return view('layouts.dataKebersihan');
+    })->name('dataKebersihan');
+    Route::get('data-booking', function(){
+        return view('layouts.dataBooking');
+    })->name('dataBooking');
+});
 
-Route::get('/pemilik-home', function(){
-    return view('pemilik.home');
-})->middleware(['auth', 'pemilik']);
-Route::get('/pengurus-home', function(){
-    return view('pengurus.home');
-})->middleware(['auth', 'pengurus']);
-Route::get('/penghuni-home', function(){
-    return view('penghuni.home');
-})->middleware(['auth', 'penghuni']);
+// Pemilik
+Route::middleware(['auth', 'pemilik'])->group(function () {
+    Route::get('pemilik-home', function(){
+        return view('pemilik.home');
+    })->name('pemilikDash');
+    Route::get('data-keuangan', function(){
+        return view('layouts.dataKeuangan');
+    })->name('dataKeuangan');
+});
+
+// Pengurus
+Route::middleware(['auth', 'pengurus'])->group(function () {
+    Route::get('/pengurus-home', function(){
+        return view('pengurus.home');
+    })->name('pengurusDash');
+});
+
+
+// Penghuni
+Route::middleware(['auth', 'penghuni'])->group(function () {
+    Route::get('/penghuni-home', function(){
+        return view('penghuni.home');
+    })->name('penghuniDash');
+});
