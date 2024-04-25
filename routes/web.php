@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PenghuniController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,9 +21,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::middleware(['auth', 'gabungan'])->group(function () {
-    Route::get('data-penghuni', function(){
-        return view('layouts.datapenghuni');
-    })->name('dataPenghuni');
+    Route::get('data-penghuni', [PenghuniController::class, 'index'])->name('dataPenghuni');
     Route::get('data-laundry', function(){
         return view('layouts.dataLaundry');
     })->name('dataLaundry');
