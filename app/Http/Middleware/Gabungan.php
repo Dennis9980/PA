@@ -17,7 +17,7 @@ class Gabungan
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::user()->role != 'pemilik' && Auth::user()->role != 'pengurus'){
-            abort(Response::HTTP_FORBIDDEN);
+            abort(Response::HTTP_FORBIDDEN, 'Kamu tidak memiliki akses di halaman ini');
         }
         return $next($request);
     }

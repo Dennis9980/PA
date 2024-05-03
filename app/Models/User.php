@@ -58,11 +58,20 @@ class User extends Authenticatable
         $query->when(isset($filters['role']) && $filters['role'] === 'penghuni', function ($query) {
             return $query->where('role', 'penghuni');
         });
-
     }
 
     public function isPenghuni()
     {
         return $this->role === 'penghuni';
+    }
+
+    public function penghuni()
+    {
+        return $this->belongsTo(Penghuni::class, 'id', 'id_user');
+    }
+    
+    public function laundries()
+    {
+        return $this->hasMany(Laundry::class, 'id_penghuni', 'id');
     }
 }

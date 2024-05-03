@@ -1,16 +1,18 @@
 <?php
 
+use App\Http\Controllers\KosController;
+use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\PenghuniController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\Penghuni;
+use App\Models\Laundry;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [KosController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,13 +23,23 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::middleware(['auth', 'gabungan'])->group(function () {
+    // Data Penghuni
     Route::get('data-penghuni', [PenghuniController::class, 'index'])->name('dataPenghuni');
-    Route::get('data-laundry', function(){
-        return view('layouts.dataLaundry');
-    })->name('dataLaundry');
+    Route::put('data-penghuni/{id}/edit', [PenghuniController::class, 'edit'])->name('editPenghuni');
+    Route::delete('data-penghuni/{id}/delete', [PenghuniController::class, 'destroy'])->name('deletePenghuni');
+
+    // Data Laundry
+    Route::get('data-laundry', [LaundryController::class, 'index'])->name('dataLaundry');
+    Route::post('data-laundry/add', [LaundryController::class, 'store'])->name('tambahLaundry');
+    Route::put('data-Laundry/{id}/edit', [LaundryController::class, 'edit'])->name('updateLaundry');
+    Route::delete('data-laundry/{id}/delete', [LaundryController::class, 'destroy'])->name('deleteLaundry');
+
+    // Data Kebersihan
     Route::get('data-kebersihan', function(){
         return view('layouts.dataKebersihan');
     })->name('dataKebersihan');
+
+    // Data Booking
     Route::get('data-booking', function(){
         return view('layouts.dataBooking');
     })->name('dataBooking');

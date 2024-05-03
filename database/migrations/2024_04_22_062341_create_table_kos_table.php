@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('nama');
             $table->string('alamat');
             $table->string('jmlh_kamar');
-            $table->enum('fasilitas_laundry', ['ada', 'tidak']);
-            $table->enum('fasilitas_kebersihan', ['ada', 'tidak']);
+            $table->enum('fasilitas_laundry', ['ada', 'tidak'])->nullable();
+            $table->enum('fasilitas_kebersihan', ['ada', 'tidak'])->nullable();
 
             $table->timestamps();
         });

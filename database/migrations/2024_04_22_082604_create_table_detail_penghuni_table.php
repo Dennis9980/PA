@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detai_penghuni', function (Blueprint $table) {
+        Schema::create('detail_penghuni', function (Blueprint $table) {
             $table->uuid('id')->primary()->default(DB::raw('(UUID())'));
             $table->uuid('id_user');
             $table->uuid('id_kos');
@@ -21,6 +21,10 @@ return new class extends Migration
             $table->date('tanggal_selesai');
             $table->enum('status_pembayaran', ['belum', 'sudah']);
             $table->timestamps();
+
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_kos')->references('id')->on('kos');
+            $table->foreign('id_kamar_kos')->references('id')->on('kamar_kos');
         });
     }
 
