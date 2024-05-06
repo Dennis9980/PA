@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KebersihanController;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\PenghuniController;
@@ -35,9 +36,7 @@ Route::middleware(['auth', 'gabungan'])->group(function () {
     Route::delete('data-laundry/{id}/delete', [LaundryController::class, 'destroy'])->name('deleteLaundry');
 
     // Data Kebersihan
-    Route::get('data-kebersihan', function(){
-        return view('layouts.dataKebersihan');
-    })->name('dataKebersihan');
+    Route::get('data-kebersihan', [KebersihanController::class, 'index'])->name('dataKebersihan');
 
     // Data Booking
     Route::get('data-booking', function(){

@@ -74,4 +74,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Laundry::class, 'id_penghuni', 'id');
     }
+    public function kebersihan()
+    {
+        return $this->hasMany(Kebersihan::class, 'id_penghuni', 'id');
+    }
 }
