@@ -20,6 +20,8 @@ return new class extends Migration
             $table->date('tanggal_masuk');
             $table->date('tanggal_selesai');
             $table->timestamps();
+
+            $table->foreign('id_penghuni')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

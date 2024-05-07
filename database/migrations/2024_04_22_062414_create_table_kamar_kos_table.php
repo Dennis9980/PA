@@ -17,6 +17,8 @@ return new class extends Migration
             $table->uuid('id_kos');
             $table->string('nomor_kamar');
             $table->timestamps();
+
+            $table->foreign('id_kos')->references('id')->on('kos')->onDelete('cascade');
         });
     }
 

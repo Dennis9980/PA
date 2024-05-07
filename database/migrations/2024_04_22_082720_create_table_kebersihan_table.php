@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('keterangan');
             $table->date('tanggal_kebersihan');
             $table->timestamps();
+
+            $table->foreign('id_penghuni')->references('id')->on('users');
         });
     }
 
