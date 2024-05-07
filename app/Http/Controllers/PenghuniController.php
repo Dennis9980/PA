@@ -14,9 +14,13 @@ use Illuminate\Validation\Rules\Password;
 
 class PenghuniController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = User::with(['penghuni'])->filter(['role' => 'penghuni'])->get();
+        $search = request('search');
+
+        $data = User::filter(['role' => 'penghuni', $search])
+            ->search(['search' => $search])
+            ->paginate(15);
 
         return view('layouts.dataPenghuni.datapenghuni', compact('data'));
     }
@@ -25,12 +29,12 @@ class PenghuniController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'username' => ['required', 'string', 'unique:'.User::class, 'max:255'],
-            'phone' => ['nullable','string'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'username' => ['required', 'string', 'unique:' . User::class, 'max:255'],
+            'phone' => ['nullable', 'string'],
             'address' => ['nullable', 'string']
         ]);
-        
+
         $user = User::findOrFail($id);
 
         // Update the user's properties
@@ -39,23 +43,22 @@ class PenghuniController extends Controller
         $user->username = $request->username;
         $user->phone = $request->phone;
         $user->address = $request->address;
-    
+
         // Save the changes
-        $user->save(); 
+        $user->save();
 
         $this->createDataDetail($request, $id);
 
         dd($request->all());
         return back()->with('success');
-
-
     }
 
-    public function createDataDetail(Request $request, $id){
+    public function createDataDetail(Request $request, $id)
+    {
         $request->validate([
             'tanggal_mulai' => ['required'],
             'tanggal_selesai' => ['required'],
-        ]); 
+        ]);
 
         Penghuni::create([
             'id_user' => $id,
@@ -66,11 +69,12 @@ class PenghuniController extends Controller
         ]);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
 
         $data = User::findOrFail($id);
         $data->delete();
-        
+
         return back()->with('message', 'Berhasil Hapus Data');
     }
 }

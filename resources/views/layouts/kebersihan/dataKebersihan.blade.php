@@ -7,17 +7,22 @@
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="pt-2 relative mx-auto text-gray-600 flex flex-row-reverse">
-            <input class="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none"
-                type="search" name="search" placeholder="Search">
-            <button type="submit" class="absolute right-0 top-0 mt-5 mr-4">
-                <svg class="text-gray-600 h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
-                    viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve"
-                    width="512px" height="512px">
-                    <path
-                        d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
-                </svg>
-            </button>
+            <form action="{{ route('dataKebersihan') }}" method="GET">
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input type="text" id="table-search-users"
+                        class="block py-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="Search for users"
+                        name="keyword">
+                </div>
+            </form>
             <button type="button"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 data-modal-toggle="crud-modal">
@@ -70,7 +75,7 @@
                                             <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"
                                                 data-modal-toggle="edit-modal{{ $laundry->id }}"></i>
                                         </button>
-                                        <form action="{{ route('deleteLaundry', $laundry->id) }}" method="POST">
+                                        <form action="{{ route('deleteDana', $laundry->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="m-1" type="submit">
@@ -112,7 +117,7 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <form action="{{ route('updateLaundry', $item->id) }}" method="POST" class="p-4 md:p-5">
+                    <form action="{{ route('updateDana', $item->id) }}" method="POST" class="p-4 md:p-5">
                         @csrf
                         @method('PUT')
                         <div class="grid gap-4 mb-4 grid-cols-2">
@@ -125,33 +130,25 @@
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="price"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat</label>
-                                <input type="number" name="berat" id="price"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dana
+                                    Kebersihan</label>
+                                <input type="number" name="dana" id="price"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="$2999" required="" value="{{ $item->berat }}">
-                            </div>
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="price"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                <input type="number" name="harga" id="price"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="$2999" required="" value="{{ $item->total_harga }}">
+                                    placeholder="$2999" required="" value="{{ $item->dana_kebersihan }}">
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="price"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                    Masuk</label>
-                                <input type="date" name="tanggal_mulai" id="price"
+                                    Kebersihan</label>
+                                <input type="date" name="tanggal_kebersihan" id="price"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="$2999" required="" value="{{ $item->tanggal_masuk }}">
+                                    placeholder="$2999" required="" value="{{ $item->tanggal_kebersihan }}">
                             </div>
-                            <div class="col-span-2 sm:col-span-1">
-                                <label for="price"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                    Selesai</label>
-                                <input type="date" name="tanggal_selesai" id="price"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="$2999" required="" value="{{ $item->tanggal_selesai }}">
+                            <div class="col-span-2 sm:col-span-2">
+                                <label for="keterangan"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
+                                <textarea name="keterangan" id="keterangan" cols="10" rows="2"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ $item->keterangan }}</textarea>
                             </div>
                         </div>
                         <button type="submit"
@@ -170,7 +167,7 @@
         </div>
     @endforeach
 
-    {{-- modal tambah--}}
+    {{-- modal tambah --}}
     <div id="crud-modal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 bg-opacity-50 bg-black justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
@@ -193,7 +190,7 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="{{ route('tambahLaundry') }}" method="POST" class="p-4 md:p-5">
+                <form action="{{ route('tambahDana') }}" method="POST" class="p-4 md:p-5">
                     @csrf
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
@@ -202,8 +199,8 @@
                                 select</label>
                             <select id="default" name="penghuni"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option class="m-1" selected>Pilih Penghuni</option>
                                 @foreach ($penghuni as $data)
-                                    <option class="m-1" selected>Pilih Pelanggan</option>
                                     <option class="m-1 capitalize" value="{{ $data->name }}">{{ $data->name }}
                                     </option>
                                 @endforeach
@@ -211,33 +208,25 @@
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat</label>
-                            <input type="number" name="berat" id="price"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="">
-                        </div>
-                        <div class="col-span-2 sm:col-span-1">
-                            <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                            <input type="number" name="harga" id="price"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dana
+                                Kebersihan</label>
+                            <input type="number" name="dana" id="price"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="$2999" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="price"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                Masuk</label>
-                            <input type="date" name="tanggal_mulai" id="price"
+                                Kebersihan</label>
+                            <input type="date" name="tanggal_kebersihan" id="price"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="$2999" required="">
                         </div>
-                        <div class="col-span-2 sm:col-span-1">
-                            <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
-                                Selesai</label>
-                            <input type="date" name="tanggal_selesai" id="price"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="">
+                        <div class="col-span-2 sm:col-span-2">
+                            <label for="keterangan"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
+                            <textarea name="keterangan" id="keterangan" cols="10" rows="2"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"></textarea>
                         </div>
                     </div>
                     <button type="submit"
@@ -255,3 +244,40 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Function to toggle modal display
+        function toggleModal(modalId, show) {
+            const modal = document.querySelector(modalId);
+            console.log(modalId);
+            if (show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('block');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('block');
+            }
+        }
+
+        // Attach event listeners to buttons for opening modals
+        document.querySelectorAll('[data-modal-toggle]').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default button behavior
+                event.stopPropagation(); // Stop the event from bubbling up
+                const modalId = '#' + button.getAttribute('data-modal-toggle');
+                toggleModal(modalId, true); // Show the modal
+            });
+        });
+
+        // Attach event listeners to buttons for closing modals
+        document.querySelectorAll('[data-modal-hide]').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                const modalId = '#' + button.getAttribute('data-modal-hide');
+                toggleModal(modalId, false); // Hide the modal
+            });
+        });
+    });
+</script>

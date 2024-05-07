@@ -37,6 +37,9 @@ Route::middleware(['auth', 'gabungan'])->group(function () {
 
     // Data Kebersihan
     Route::get('data-kebersihan', [KebersihanController::class, 'index'])->name('dataKebersihan');
+    Route::post('data-kebersihan/add', [KebersihanController::class, 'store'])->name('tambahDana');
+    Route::put('data-kebersihan/{id}/edit', [KebersihanController::class, 'update'])->name('updateDana');
+    Route::delete('data-kebersihan/{id}/delete', [KebersihanController::class, 'destroy'])->name('deleteDana');
 
     // Data Booking
     Route::get('data-booking', function(){

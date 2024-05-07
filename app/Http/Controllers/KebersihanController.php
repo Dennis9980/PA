@@ -12,12 +12,17 @@ class KebersihanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Kebersihan::with('user')->get();
+        $data = Kebersihan::with('user')
+            ->search($request->input('keyword'))
+            ->paginate(8);
+        $dataPenghuni = User::filter(['role' => 'penghuni'])->get();
 
         return view('layouts.kebersihan.dataKebersihan', [
             'data' => $data,
+            'penghuni' => $dataPenghuni,
+            'keyword' => $request->input('keyword')
         ]);
     }
 
@@ -36,10 +41,9 @@ class KebersihanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'penghuni' => ['required'],
-            'berat' => ['required'],
-            'harga' => ['required'],
-            'tanggal_mulai' => ['required'],
-            'tanggal_selesai' => ['required'],
+            'dana' => ['required'],
+            'keterangan' => ['required'],
+            'tanggal_kebersihan' => ['required'],
         ]);
 
         if ($validator->fails()) {
@@ -50,10 +54,9 @@ class KebersihanController extends Controller
 
         Kebersihan::create([
             'id_penghuni' => $pelanggan->id,
-            'berat' => $request->berat,
-            'total_harga' => $request->harga,
-            'tanggal_masuk' => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai
+            'dana_kebersihan' => $request->dana,
+            'keterangan' => $request->keterangan,
+            'tanggal_kebersihan' => $request->tanggal_kebersihan,
         ]);
 
         return back()->with('success', 'Berhasil menambahkan data');
@@ -78,16 +81,39 @@ class KebersihanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kebersihan $kebersihan)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'penghuni' => ['required'],
+            'dana' => ['required'],
+            'keterangan' => ['required'],
+            'tanggal_kebersihan' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $dataKebersihan = Kebersihan::findOrfail($id);
+        $pelanggan = User::where('name', $request->penghuni)->first();
+
+        $dataKebersihan->update([
+            'id_penghuni' => $pelanggan->id,
+            'dana_kebersihan' => $request->dana,
+            'keterangan' => $request->keterangan,
+            'tanggal_kebersihan' => $request->tanggal_kebersihan,
+        ]);
+
+        return back()->with('success', 'Berhasil update data');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Kebersihan $kebersihan)
+    public function destroy($id)
     {
-        //
+        Kebersihan::findOrFail($id)->delete();
+
+        return back()->with('success', 'Berhasil menghapus data');
     }
 }

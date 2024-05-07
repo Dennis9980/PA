@@ -55,10 +55,20 @@ class User extends Authenticatable
 
     public function scopeFilter($query, array $filters)
     {
+        // Role-based filtering
         $query->when(isset($filters['role']) && $filters['role'] === 'penghuni', function ($query) {
             return $query->where('role', 'penghuni');
         });
+    
     }
+
+    public function scopeSearch($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            return $query->where('name', 'like', '%' . $search . '%');
+        });
+    }
+
 
     public function isPenghuni()
     {

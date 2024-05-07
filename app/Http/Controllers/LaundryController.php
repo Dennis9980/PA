@@ -12,14 +12,19 @@ class LaundryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = Laundry::with('user')->get();
+
+        $data = Laundry::with('user')
+            ->search($request->input('keyword'))
+            ->paginate(8);
         $dataPenghuni = User::filter(['role' => 'penghuni'])->get();
 
         return view('layouts.dataLaundry.dataLaundry', [
             'data' => $data,
-            'penghuni' => $dataPenghuni
+            'penghuni' => $dataPenghuni,
+            'keyword' => $request->input('keyword')
+
         ]);
     }
 
@@ -79,8 +84,8 @@ class LaundryController extends Controller
             'penghuni' => ['required'],
             'berat' => ['required', 'numeric'],
             'harga' => ['required', 'numeric'],
-            'tanggal_mulai' => ['required', 'date'], 
-            'tanggal_selesai' => ['required', 'date'], 
+            'tanggal_mulai' => ['required', 'date'],
+            'tanggal_selesai' => ['required', 'date'],
         ]);
 
         if ($validator->fails()) {

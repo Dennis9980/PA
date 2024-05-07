@@ -18,6 +18,16 @@ class Laundry extends Model
         'tanggal_selesai',
     ];
 
+    public function scopeSearch($query, $keyword)
+    {
+        if ($keyword) {
+            return $query->whereHas('user', function ($query) use ($keyword) {
+                $query->where('name', 'like', "%{$keyword}%");
+            });
+        }
+        return $query; // Mengembalikan query tanpa filter apapun jika tidak ada keyword
+    }
+    
     protected $table = 'laundry';
 
     public function user()

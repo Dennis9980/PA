@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Kebersihan extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     protected $table = 'kebersihan';
     protected $fillable = [
@@ -17,6 +18,16 @@ class Kebersihan extends Model
         'keterangan',
         'tanggal_kebersihan'
     ];
+
+    public function scopeSearch($query, $keyword)
+    {
+        if ($keyword) {
+            return $query->whereHas('user', function ($query) use ($keyword) {
+                $query->where('name', 'like', "%{$keyword}%");
+            });
+        }
+        return $query; // Mengembalikan query tanpa filter apapun jika tidak ada keyword
+    }
 
     public function user()
     {
