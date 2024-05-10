@@ -1,12 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                {{ __('Data Penghuni') }}
-            </h2>
-        </div>
-    </x-slot>
-
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="pt-2 relative mx-auto text-gray-600 flex flex-row-reverse">
             <form action="{{ route('dataPenghuni') }}" method="GET">
