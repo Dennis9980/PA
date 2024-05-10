@@ -14,6 +14,11 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'side-bar-color': '#3C6255',
+                'menu-hover': '#EAE7B1',
+                'button-submit': '#61876E'
+              },
         },
     },
 

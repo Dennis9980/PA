@@ -1,9 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Laundry') }}
-        </h2>
-    </x-slot>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="pt-2 relative mx-auto text-gray-600 flex flex-row-reverse">
             <form action="{{ route('dataLaundry') }}" method="GET">
@@ -17,13 +12,12 @@
                         </svg>
                     </div>
                     <input type="text" id="table-search-users"
-                        class="block py-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for users"
-                        name="keyword">
+                        class="block py-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                        placeholder="Search for users" name="keyword">
                 </div>
             </form>
             <button type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                class="text-white bg-button-submit hover:bg-menu-hover focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-button-submit dark:hover:bg-menu-hover focus:outline-none dark:focus:ring-gray-800"
                 data-modal-toggle="crud-modal">
                 Tambah Laundry
             </button>
@@ -34,7 +28,8 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-xs text-white uppercase bg-side-bar-color dark:bg-side-bar-color dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     Nama
@@ -80,13 +75,11 @@
                                             <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"
                                                 data-modal-toggle="edit-modal{{ $laundry->id }}"></i>
                                         </button>
-                                        <form action="{{ route('deleteLaundry', $laundry->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="m-1" type="submit">
-                                                <i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i>
-                                            </button>
-                                        </form>
+
+                                        <button class="m-1" type="submit"
+                                            data-modal-toggle="delete-modal{{ $laundry->id }}">
+                                            <i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i>
+                                        </button>
                                     </td>
 
                                 </tr>
@@ -97,6 +90,8 @@
             </div>
         </div>
     </div>
+
+
 
     {{-- Modal Edit --}}
     @foreach ($data as $item)
@@ -165,21 +160,46 @@
                             </div>
                         </div>
                         <button type="submit"
-                            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            Add new product
+                            class="mt-3 text-white inline-flex w-full justify-center bg-button-submit hover:bg-menu-hover focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm py-2.5 text-center dark:bg-gray-600 dark:hover:bg-button-submit dark:focus:ring-menu-hover">
+                            Submit
                         </button>
                     </form>
                 </div>
             </div>
         </div>
     @endforeach
+    {{-- Modal Delete --}}
+    @foreach ($data as $item)
+        <div id="delete-modal{{ $item->id }}" tabindex="-1"
+            class="hidden overflow-y-auto overflow-x-hidden fixed flex inset-0 bg-opacity-50 bg-black z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div class="p-4 md:p-5 text-center">
+                        <svg class="mx-auto mb-4 text-orange-400 w-20 h-20 dark:text-gray-200" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin akan
+                            menghapus data ini?</h3>
+                        <div class="flex flex-row justify-center">
 
+                            <form action="{{ route('deleteLaundry', $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                    Iya, Yakin
+                                </button>
+                            </form>
+                            <button data-modal-hide="delete-modal{{ $item->id }}" type="button"
+                                class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Tidak,
+                                Batalkan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    @endforeach
     {{-- modal tambah laundry --}}
     <div id="crud-modal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 bg-opacity-50 bg-black justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -189,7 +209,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                        Create New Product
+                        Tambah Data Laundry
                     </h3>
                     <button type="button"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -208,13 +228,14 @@
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-2">
                             <label for="default"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Default
-                                select</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
+                                Penghuni</label>
                             <select id="default" name="penghuni"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option class="m-1" selected>Pilih Penghuni</option>
                                 @foreach ($penghuni as $data)
-                                    <option class="m-1" selected>Pilih Pelanggan</option>
-                                    <option class="m-1 capitalize" value="{{ $data->name }}">{{ $data->name }}
+                                    <option class="m-1 capitalize" value="{{ $data->name }}">
+                                        {{ $data->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -224,14 +245,14 @@
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat</label>
                             <input type="number" name="berat" id="price"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="">
+                                placeholder="Total Berat" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Harga</label>
                             <input type="number" name="harga" id="price"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="">
+                                placeholder="Total harga" required="">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="price"
@@ -251,19 +272,15 @@
                         </div>
                     </div>
                     <button type="submit"
-                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        Add new product
+                        class="mt-3 text-white inline-flex justify-center w-full bg-button-submit hover:bg-menu-hover focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm py-2.5 text-center dark:bg-gray-600 dark:hover:bg-button-submit dark:focus:ring-menu-hover">
+                        Submit
                     </button>
                 </form>
             </div>
         </div>
     </div>
+
+
 </x-app-layout>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
