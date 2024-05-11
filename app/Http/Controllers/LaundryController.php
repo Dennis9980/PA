@@ -17,10 +17,10 @@ class LaundryController extends Controller
 
         $data = Laundry::with('user')
             ->search($request->input('keyword'))
-            ->paginate(8);
+            ->paginate(6);
         $dataPenghuni = User::filter(['role' => 'penghuni'])->get();
 
-        return view('layouts.dataLaundry.dataLaundry', [
+        return view('layouts.laundry.dataLaundry', [
             'data' => $data,
             'penghuni' => $dataPenghuni,
             'keyword' => $request->input('keyword')

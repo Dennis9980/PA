@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="pt-2 relative mx-auto text-gray-600 flex flex-row-reverse">
-            <form action="{{ route('dataKebersihan') }}" method="GET">
+            <form action="{{ route('dataPenghuni') }}" method="GET">
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -13,14 +13,13 @@
                     </div>
                     <input type="text" id="table-search-users"
                         class="block py-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for users"
-                        name="keyword">
+                        placeholder="Search for users" name="search" value="{{ request('search') }}">
                 </div>
             </form>
             <button type="button"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 data-modal-toggle="crud-modal">
-                Tambah Dana
+                Tambah Penghuni
             </button>
         </div>
     </div>
@@ -35,41 +34,44 @@
                                     Nama
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    dana kebersihan
+                                    Kamar/Username
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    keterangan
+                                    no telepon
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    tanggal kebersihan
+                                    email
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Opsi
+                                    opsi
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $item)
+                            @foreach ($data as $penghuni)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $item->user->name }}
+                                        {{ $penghuni->name }}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{ $item->dana_kebersihan }}
-                                    </td>
-                                    <td class="px-6 py-6">
-                                        {{ $item->keterangan }}
+                                        {{ $penghuni->username }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $item->tanggal_kebersihan ?? 'Tidak mencantumkan' }}
+                                        {{ $penghuni->phone ?? 'Tidak mencantumkan' }}
                                     </td>
-                                    <td class="px-4 py-4 flex gap-3">
-                                        <button>
-                                            <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"
-                                                data-modal-toggle="edit-modal{{ $item->id }}"></i>
+                                    <td class="px-6 py-4">
+                                        {{ $penghuni->email }}
+                                    </td>
+                                    <td class="py-4 flex gap-1">
+                                        <button class="m-1" data-modal-target="static-modal{{ $penghuni->id }}"
+                                            data-modal-toggle="static-modal{{ $penghuni->id }}">
+                                            <i class="fa-solid fa-circle-info fa-xl" style="color: #00c220;"></i>
                                         </button>
-                                        <form action="{{ route('deleteDana', $item->id) }}" method="POST">
+                                        <button>
+                                            <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"></i>
+                                        </button>
+                                        <form action="{{ route('deletePenghuni', $penghuni->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button class="m-1" type="submit">
@@ -78,8 +80,7 @@
                                         </form>
                                     </td>
                                 </tr>
-                                {{-- Modal Edit --}}
-                                @include('layouts.kebersihan.partials.modal-edit')
+                                @include('layouts.penghuni.partials.modal-edit')
                             @endforeach
                         </tbody>
                     </table>
@@ -91,6 +92,7 @@
         </div>
     </div>
 
-    {{-- modal tambah --}}
-    @include('layouts.kebersihan.partials.modal-add')
+    {{-- Modal tambah --}}
+    @include('layouts.penghuni.partials.modal-add')
+
 </x-app-layout>

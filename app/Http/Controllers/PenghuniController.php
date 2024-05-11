@@ -20,9 +20,9 @@ class PenghuniController extends Controller
 
         $data = User::filter(['role' => 'penghuni', $search])
             ->search(['search' => $search])
-            ->paginate(15);
+            ->paginate(6);
 
-        return view('layouts.dataPenghuni.datapenghuni', compact('data'));
+        return view('layouts.penghuni.datapenghuni', compact('data'));
     }
 
     public function edit(Request $request, $id)
