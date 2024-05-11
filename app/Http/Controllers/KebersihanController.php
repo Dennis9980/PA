@@ -16,7 +16,7 @@ class KebersihanController extends Controller
     {
         $data = Kebersihan::with('user')
             ->search($request->input('keyword'))
-            ->paginate(8);
+            ->paginate(6);
         $dataPenghuni = User::filter(['role' => 'penghuni'])->get();
 
         return view('layouts.kebersihan.dataKebersihan', [

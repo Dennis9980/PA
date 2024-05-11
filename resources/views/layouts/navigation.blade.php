@@ -24,6 +24,10 @@
                     <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
                         {{ __('Kelola Booking') }}
                     </h2>
+                @elseif (request()->routeIs('profile.edit'))
+                    <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+                        {{ __('Profile') }}
+                    </h2>
                 @else
                     <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
                         {{ __('Dashboard') }}
@@ -81,7 +85,7 @@
             @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
                 <li>
                     <a href="{{ route('dataPenghuni') }}"
-                        class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataPenghuni') ? 'bg-menu-hover text-side-bar-color font-bold dark:text-side-bar-color ' : '' }}">
+                        class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataPenghuni') ? 'bg-menu-hover text-side-bar-color  dark:text-side-bar-color font-bold' : '' }}">
                         <span class="ms-3">Data Penghuni</span>
                     </a>
                 </li>

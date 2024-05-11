@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="pt-2 relative mx-auto text-gray-600 flex flex-row-reverse">
-            <form action="{{ route('dataKebersihan') }}" method="GET">
+            <form action="{{ route('dataLaundry') }}" method="GET">
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -12,36 +12,40 @@
                         </svg>
                     </div>
                     <input type="text" id="table-search-users"
-                        class="block py-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for users"
-                        name="keyword">
+                        class="block py-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                        placeholder="Search for users" name="keyword">
                 </div>
             </form>
             <button type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                class="text-white bg-button-submit hover:bg-menu-hover focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-button-submit dark:hover:bg-menu-hover focus:outline-none dark:focus:ring-gray-800"
                 data-modal-toggle="crud-modal">
-                Tambah Dana
+                Tambah Laundry
             </button>
         </div>
     </div>
+
     <div class="py-2">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead
+                            class="text-xs text-white uppercase bg-side-bar-color dark:bg-side-bar-color dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     Nama
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    dana kebersihan
+                                    berat
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    keterangan
+                                    Total Harga
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    tanggal kebersihan
+                                    tanggal masuk
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    tanggal selesai
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     Opsi
@@ -49,37 +53,43 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $item)
+                            @foreach ($data as $laundry)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $item->user->name }}
+                                        {{ $laundry->user->name }}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{ $item->dana_kebersihan }}
+                                        {{ $laundry->berat }}
                                     </td>
                                     <td class="px-6 py-6">
-                                        {{ $item->keterangan }}
+                                        {{ $laundry->total_harga }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ $item->tanggal_kebersihan ?? 'Tidak mencantumkan' }}
+                                        {{ $laundry->tanggal_masuk ?? 'Tidak mencantumkan' }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ $laundry->tanggal_selesai }}
                                     </td>
                                     <td class="px-4 py-4 flex gap-3">
                                         <button>
                                             <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"
-                                                data-modal-toggle="edit-modal{{ $item->id }}"></i>
+                                                data-modal-toggle="edit-modal{{ $laundry->id }}"></i>
                                         </button>
-                                        <form action="{{ route('deleteDana', $item->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="m-1" type="submit">
-                                                <i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i>
-                                            </button>
-                                        </form>
+
+                                        <button class="m-1" type="submit"
+                                            data-modal-toggle="delete-modal{{ $laundry->id }}">
+                                            <i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i>
+                                        </button>
                                     </td>
+
                                 </tr>
+
                                 {{-- Modal Edit --}}
-                                @include('layouts.kebersihan.partials.modal-edit')
+                                @include('layouts.laundry.partials.modal-edit-data')
+                                {{-- Modal Delete --}}
+                                @include('layouts.laundry.partials.modal-delete-data')
+                                
                             @endforeach
                         </tbody>
                     </table>
@@ -91,6 +101,6 @@
         </div>
     </div>
 
-    {{-- modal tambah --}}
-    @include('layouts.kebersihan.partials.modal-add')
+    {{-- modal tambah laundry --}}
+    @include('layouts.laundry.partials.modal-add-data') 
 </x-app-layout>
