@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Kos;
 use App\Models\Laundry;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -25,5 +26,9 @@ class DatabaseSeeder extends Seeder
             'phone' => '085155370210',
             'address' => 'jember'
         ]);
+
+        Kos::factory(10) // Buat 10 data kos
+            ->hasKamarKos(5) // Setiap kos memiliki 5 kamar
+            ->create();
     }
 }

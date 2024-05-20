@@ -20,14 +20,13 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form action="{{ route('tambahDana') }}" method="POST" class="p-4 md:p-5">
-                @csrf
+            <form  wire:submit.prevent="store" class="p-4 md:p-5">
                 <div class="grid gap-4 mb-4 grid-cols-2">
                     <div class="col-span-2">
                         <label for="default"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Default
                             select</label>
-                        <select id="default" name="penghuni"
+                        <select id="default" name="penghuni" wire:model="penghuni_input"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option class="m-1" selected>Pilih Penghuni</option>
                             @foreach ($penghuni as $data)
@@ -39,7 +38,7 @@
                     <div class="col-span-2 sm:col-span-1">
                         <label for="price" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dana
                             Kebersihan</label>
-                        <input type="number" name="dana" id="price"
+                        <input type="number" name="dana" wire:model="dana" id="price"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="$2999" required="">
                     </div>
@@ -47,14 +46,14 @@
                         <label for="price"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
                             Kebersihan</label>
-                        <input type="date" name="tanggal_kebersihan" id="price"
+                        <input type="date" name="tanggal_kebersihan" wire:model="tanggal_kebersihan" id="price"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="$2999" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-2">
                         <label for="keterangan"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
-                        <textarea name="keterangan" id="keterangan" cols="10" rows="2"
+                        <textarea name="keterangan" id="keterangan" cols="10" rows="2" wire:model="keterangan"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"></textarea>
                     </div>
                 </div>
