@@ -10,7 +10,10 @@ use App\Models\Laundry;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('landingPage');
+    return view('layouts.guest.landingPage');
+});
+Route::get('/booking', function () {
+    return view('layouts.guest.booking');
 });
 
 Route::get('/dashboard', [KosController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

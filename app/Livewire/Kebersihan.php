@@ -1,65 +1,53 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Livewire;
 
 use App\Models\User;
-use App\Models\Kebersihan;
+use Livewire\Component;
+use App\Models\Kebersihan as ModelKebersihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class KebersihanController extends Controller
+class Kebersihan extends Component
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
-    {
-        $data = Kebersihan::with('user')
-            ->search($request->input('keyword'))
-            ->get();
-        $dataPenghuni = User::filter(['role' => 'penghuni'])->get();
+    public $data;
+    public $penghuni;
+    public $keyword;
+    public $penghuni_input;
+    public $dana;
+    public $keterangan;
+    public $tanggal_kebersihan;
 
-        return view('layouts.kebersihan.dataKebersihan', [
-            'data' => $data,
-            'penghuni' => $dataPenghuni,
-            'keyword' => $request->input('keyword')
-        ]);
+    protected $rules = [
+        'penghuni_input' => ['required'],
+        'dana' => ['required'],
+        'keterangan' => ['required'],
+        'tanggal_kebersihan' => ['required'],
+    ];
+    
+    public function mount($data, $penghuni, $keyword){
+        $this->data = $data;
+        $this->penghuni = $penghuni;
+        $this->keyword = $keyword;
+    }
+    public function render()
+    {
+
+        return view('livewire.dataKebersihan');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store()
     {
-        //
-    }
+        $this->validate();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'penghuni' => ['required'],
-            'dana' => ['required'],
-            'keterangan' => ['required'],
-            'tanggal_kebersihan' => ['required'],
-        ]);
+        $pelanggan = User::where('name', $this->penghuni_input)->first();
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $pelanggan = User::where('name', $request->penghuni)->first();
-
-        Kebersihan::create([
+        ModelKebersihan::create([
             'id_penghuni' => $pelanggan->id,
-            'dana_kebersihan' => $request->dana,
-            'keterangan' => $request->keterangan,
-            'tanggal_kebersihan' => $request->tanggal_kebersihan,
+            'dana_kebersihan' => $this->dana,
+            'keterangan' => $this->keterangan,
+            'tanggal_kebersihan' => $this->tanggal_kebersihan,
         ]);
-
-        return back()->with('success', 'Berhasil menambahkan data');
     }
 
     /**

@@ -1,4 +1,5 @@
 <x-guest-layout>
+    
     <div class="flex justify-center pb-4">
         <a href="/">
             <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
@@ -10,7 +11,7 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Email Address -->
+        <!-- Email Address -->  
         <div>
             <x-input-label for="username" :value="__('Username')" />
             <x-text-input id="username" class="block mt-1 w-full dark:text-black" type="text" name="username" :value="old('username')" required

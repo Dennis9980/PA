@@ -30,6 +30,5 @@ document.addEventListener("DOMContentLoaded", function () {
             const modalId = "#" + button.getAttribute("data-modal-hide");
             toggleModal(modalId, false); // Hide the modal
         });
-    });
+    }); 
 });
-
