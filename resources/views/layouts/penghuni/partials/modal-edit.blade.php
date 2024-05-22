@@ -31,23 +31,23 @@
             <!-- Modal body -->
             <form action="{{ route('editPenghuni', $penghuni->id) }}" method="POST">
                 @csrf
-                @method('PUT')
                 <div class="grid gap-4 mb-4 grid-cols-2 p-6">
                     <div class="col-span-2">
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                         <input type="text" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Tulis Nama Lengkap" name="name" value="{{ $penghuni->name }}" disabled
-                            readonly>
+                            placeholder="Tulis Nama Lengkap" name="name" value="{{ $penghuni->name }}">
+                        @error('email')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                         <input type="text" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Tulis Kamar Berapa" name="username" value="{{ $penghuni->username }}" disabled
-                            readonly>
+                            placeholder="Tulis Kamar Berapa" name="username" value="{{ $penghuni->username }}">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No
@@ -55,15 +55,14 @@
                         </label>
                         <input type="text" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Tulis No Telepon" name="phone" value="{{ $penghuni->phone }}" disabled
-                            readonly>
+                            placeholder="Tulis No Telepon" name="phone" value="{{ $penghuni->phone }}">
                     </div>
                     <div class="col-span-2">
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input type="text" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Tulis Email" name="email" value="{{ $penghuni->email }}" disabled readonly>
+                            placeholder="Tulis Email" name="email" value="{{ $penghuni->email }}">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name"
@@ -78,21 +77,28 @@
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
                             Selesai</label>
-                        <input type="date" id="name"
+                        <input type="date" id="name" name="tanggal_selesai"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="Tulis Email"
-                            value="{{ $penghuni->penghuni->tanggal_selesai ?? 'Belum di atur' }}" tanggal_selesai>
+                            value="{{ $penghuni->penghuni->tanggal_selesai ?? 'Belum di atur' }}">
                     </div>
                     <div class="col-span-2">
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
                         <textarea name="address" id="name" cols="10" rows="3"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            disabled readonly>{{ $penghuni->address }}</textarea>
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ $penghuni->address }}</textarea>
                     </div>
                 </div>
+                <input type="text">
+                <input type="text" name="id_kos" value="{{ $penghuni->penghuni->id_kos ?? 'nggk ada' }}">
+                <input type="text" name="id_kamar_kos" value="{{ $penghuni->penghuni->id_kamar_kos ?? 'nggk ada' }}">
                 <button type="submit">submit</button>
             </form>
+            {{-- <form action="{{ route('makeDetail') }}" method="POST">
+                @csrf
+
+                <button type="submit">submit</button>
+            </form> --}}
         </div>
     </div>
 </div>

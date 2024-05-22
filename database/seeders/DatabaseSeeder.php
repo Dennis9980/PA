@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'address' => 'jember'
         ]);
 
-        Kos::factory(10) // Buat 10 data kos
+        Kos::factory(1) // Buat 10 data kos
             ->hasKamarKos(5) // Setiap kos memiliki 5 kamar
             ->create();
     }
