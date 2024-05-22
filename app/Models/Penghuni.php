@@ -2,21 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Penghuni extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
-    public $incrementing = false;
-    protected $keyType = 'string';
     protected $table = 'detail_penghuni';
 
     protected $fillable = [
-        'tanggal_mulai',
-        'tanggal_selesai',
-        'status_pembayaran',
+        'id_user', 'id_kos', 'id_kamar_kos', 'tanggal_mulai', 'tanggal_selesai', 'status_pembayaran'
     ];
 
     protected function casts(): array
@@ -32,11 +29,10 @@ class Penghuni extends Model
         return $this->hasOne(User::class, 'id', 'id_user');
     }
 
-    // public function kos()
-    // {
-    //     return $this->belongsTo(Kos::class, 'id_kos'); 
-    //     // Assuming you have a 'Kos' model
-    // }
+    public function kos()
+    {
+        return $this->belongsTo(Kos::class, 'id_kos'); // Sesuaikan foreign key jika berbeda
+    }
 
     // public function kamarKos()
     // {

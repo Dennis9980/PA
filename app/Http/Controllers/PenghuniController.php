@@ -27,46 +27,52 @@ class PenghuniController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'username' => ['required', 'string', 'unique:' . User::class, 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string'],
             'address' => ['nullable', 'string']
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
         $user = User::findOrFail($id);
 
         // Update the user's properties
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->username = $request->username;
-        $user->phone = $request->phone;
-        $user->address = $request->address;
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'username' => $request->username,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
 
-        // Save the changes
-        $user->save();
+        // Update atau buat data Penghuni jika role adalah 'penghuni'
+        if ($user->role === 'penghuni') {
+            $user->penghuni()->updateOrCreate(
+                ['id_user' => $id], // Kondisi pencarian
+                [
+                    'id_kos' => $request->id_kos,
+                    'id_kamar_kos' => $request->id_kamar_kos,
+                    'tanggal_mulai' => $request->tanggal_mulai,
+                    'tanggal_selesai' => $request->tanggal_selesai,
+                    'status_pembayaran' => 'sudah',
+                ]
+            );
+        }
 
-        $this->createDataDetail($request, $id);
 
-        dd($request->all());
         return back()->with('success');
     }
 
     public function createDataDetail(Request $request, $id)
     {
-        $request->validate([
-            'tanggal_mulai' => ['required'],
-            'tanggal_selesai' => ['required'],
-        ]);
 
-        Penghuni::create([
-            'id_user' => $id,
-            'id_kos' => 'kamar1',
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
-            'status_pemabayaran' => 'sudah'
-        ]);
+
+        return back()->with('success', 'berhasil nambah detail');
     }
 
     public function destroy($id)

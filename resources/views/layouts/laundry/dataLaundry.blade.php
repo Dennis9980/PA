@@ -53,44 +53,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $laundry)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $laundry->user->name }}
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        {{ $laundry->berat }}
-                                    </td>
-                                    <td class="px-6 py-6">
-                                        {{ $laundry->total_harga }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $laundry->tanggal_masuk ?? 'Tidak mencantumkan' }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $laundry->tanggal_selesai }}
-                                    </td>
-                                    <td class="px-4 py-4 flex gap-3">
-                                        <button>
-                                            <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"
-                                                data-modal-toggle="edit-modal{{ $laundry->id }}"></i>
-                                        </button>
+                            @if ($data->count())
+                                @foreach ($data as $laundry)
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $laundry->user->name }}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            {{ $laundry->berat }}
+                                        </td>
+                                        <td class="px-6 py-6">
+                                            {{ $laundry->total_harga }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $laundry->tanggal_masuk ?? 'Tidak mencantumkan' }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $laundry->tanggal_selesai }}
+                                        </td>
+                                        <td class="px-4 py-4 flex gap-3">
+                                            <button>
+                                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"
+                                                    data-modal-toggle="edit-modal{{ $laundry->id }}"></i>
+                                            </button>
 
-                                        <button class="m-1" type="submit"
-                                            data-modal-toggle="delete-modal{{ $laundry->id }}">
-                                            <i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i>
-                                        </button>
-                                    </td>
+                                            <button class="m-1" type="submit"
+                                                data-modal-toggle="delete-modal{{ $laundry->id }}">
+                                                <i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i>
+                                            </button>
+                                        </td>
 
+                                    </tr>
+
+                                    {{-- Modal Edit --}}
+                                    @include('layouts.laundry.partials.modal-edit-data')
+                                    {{-- Modal Delete --}}
+                                    @include('layouts.laundry.partials.modal-delete-data')
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 font-bold text-lg">Data Kosong</td>
                                 </tr>
-
-                                {{-- Modal Edit --}}
-                                @include('layouts.laundry.partials.modal-edit-data')
-                                {{-- Modal Delete --}}
-                                @include('layouts.laundry.partials.modal-delete-data')
-                                
-                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -100,7 +105,7 @@
             </div>
         </div>
     </div>
-
     {{-- modal tambah laundry --}}
-    @include('layouts.laundry.partials.modal-add-data') 
+    @include('layouts.laundry.partials.modal-add-data')
+
 </x-app-layout>

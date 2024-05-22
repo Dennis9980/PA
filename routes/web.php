@@ -29,10 +29,11 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'gabungan'])->group(function () {
     // Data Penghuni
     Route::get('data-penghuni', [PenghuniController::class, 'index'])->name('dataPenghuni');
-    Route::put('data-penghuni/{id}/edit', [PenghuniController::class, 'edit'])->name('editPenghuni');
+    Route::post('data-penghuni/{id}/', [PenghuniController::class, 'edit'])->name('editPenghuni');
+    Route::post('data-penghuni/addDetail', [PenghuniController::class, 'createDataDetail'])->name('makeDetail');
     Route::delete('data-penghuni/{id}/delete', [PenghuniController::class, 'destroy'])->name('deletePenghuni');
 
-    // Data Laundry
+// Data Laundry
     Route::get('data-laundry', [LaundryController::class, 'index'])->name('dataLaundry');
     Route::post('data-laundry/add', [LaundryController::class, 'store'])->name('tambahLaundry');
     Route::put('data-Laundry/{id}/edit', [LaundryController::class, 'edit'])->name('updateLaundry');
