@@ -8,7 +8,6 @@
     <script src="https://kit.fontawesome.com/d2f94ceef2.js" crossorigin="anonymous"></script>
     <title>Document</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
 </head>
 
 <body class="bg-white font-sans">
@@ -61,10 +60,8 @@
                 </div>
             </div>
 
-
-
             <div id="bookingModal"
-                class=" hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center"
+                class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center"
                 x-data="{ open: false }">
                 <div class="relative p-5 border w-96 shadow-lg rounded-md bg-white">
                     <div class="mt-3">
@@ -79,40 +76,36 @@
                                 <p class="text-sm text-gray-500">
                                     Harga: <span id="modalHarga"></span>
                                 </p>
+                                <p class="text-sm text-gray-500">
+                                    Dp: 2.000.000
+                                </p>
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <input type="hidden" name="id_koks" value="">
-                            <input type="text" id="modalTipeKamarInput" name="tipe_kos" value="" readonly>
-                            <input type="text" id="modalHargaInput" name="total_harga" value="" readonly>
+                            <!-- Isi Form Booking -->
+                            <form action="/checkout" method="POST">
+                                @csrf
+                                <input type="hidden" id="modalTipeKamarInput" name="modalTipeKamarInput" value="">
+                                <input type="hidden" id="modalHargaInput" name="modalHargaInput" value="">
+                                <input type="hidden" id="modalDpInput" name="modalDpInput" value="2000000">
 
-
-                            <label for="namaLengkap" class="block mb-2 text-sm font-medium">Nama Lengkap</label>
-                            <input type="text" name="dana" wire:model="dana" id="namaLengkap"
-                                class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                placeholder="Nama Lengkap" required="">
-                            <label for="noTelp" class="block mb-2 text-sm font-medium">No. Telepon</label>
-                            <input type="text" name="dana" wire:model="dana" id="noTelp"
-                                class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                placeholder="No Telepon" required="">
-                            <label for="emaill" class="block mb-2 text-sm font-medium">Email</label>
-                            <input type="text" name="dana" wire:model="dana" id="emaill"
-                                class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                placeholder="email@gmail.com" required="">
-                            <label for="startDate" class="block mb-2 text-sm font-medium">Tanggal Mulai</label>
-                            <input type="date" name="dana" wire:model="dana" id="startDate"
-                                class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                required="">
-                        </div>
-                        <div class="flex flex-row items-center gap-2 mt-4">
-                            <button id="closeModal" @click="open = false"
-                                class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Batal
-                            </button>
-                            <button
-                                class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Konfirmasi
-                            </button>
+                                <label for="namaLengkap" class="block mb-2 text-sm font-medium">Nama Lengkap</label>
+                                <input type="text" name="nama_lengkap" id="nama_lengkap" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Nama Lengkap" required="">
+                                
+                                <label for="noTelp" class="block mb-2 text-sm font-medium">No. Telepon</label>
+                                <input type="text" name="no_telpon" id="no_telpon" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="No Telepon" required="">
+                                
+                                <label for="emaill" class="block mb-2 text-sm font-medium">Email</label>
+                                <input type="email" name="email" id="emaill" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="email@gmail.com" required="">
+                                
+                                <label for="startDate" class="block mb-2 text-sm font-medium">Tanggal Mulai</label>
+                                <input type="date" name="tgl_masuk" id="tgl_masuk" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required="">
+                                
+                                <div class="flex flex-row items-center gap-2 mt-4">
+                                    <button id="closeModal" type="button" class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Batal</button>
+                                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Konfirmasi</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -129,10 +122,9 @@
                         <li>Kamar Mandi Dalam</li>
                         <li>AC (Beberapa Kamar)</li>
                     </ul>
-
                 </div>
             </div>
-            <div class=" bg-white p-5 m-5 drop-shadow-xl rounded-xl">
+            <div class="bg-white p-5 m-5 drop-shadow-xl rounded-xl">
                 <h1 class="text-xl uppercase font-semibold">Spesifikasi Kamar (Tipe B)</h1>
                 <div class="pl-4">
                     <ul class="max-w-md space-y-1 list-disc list-inside">
@@ -153,24 +145,17 @@
                     <li>Batas waktu teman berkunjung hingga pukul 23.00 dan tidak boleh menginap. Hanya orang tua dan
                         saudara kandung yang diperbolehkan menginap.</li>
                     <li>Setelah pukul 23.00, teman tidak diperbolehkan masuk ke dalam kosan, meskipun hanya sebentar.
-                        Teman
-                        dapat menunggu di luar gerbang.</li>
+                        Teman dapat menunggu di luar gerbang.</li>
                     <li>Bapak Hari adalah penjaga malam virtual rumah daun. Aktivitas keluar masuk kosan setelah pukul
-                        23.00
-                        akan termonitor.</li>
+                        23.00 akan termonitor.</li>
                     <li>Jika saudara kandung menginap, harap memberi tahu paling lambat 1 hari sebelumnya dengan
-                        menyertakan
-                        bukti KTP/KK/telepon dari orang tua.</li>
+                        menyertakan bukti KTP/KK/telepon dari orang tua.</li>
                     <li>Tamu putri dilarang masuk kamar dengan alasan apapun dan hanya boleh diterima di ruang tamu.
-                        Toilet
-                        untuk tamu putri tersedia di lantai 1 sebelah dapur.</li>
+                        Toilet untuk tamu putri tersedia di lantai 1 sebelah dapur.</li>
                     <li>Pastikan pintu gerbang tertutup rapat sebelum pergi, terutama pada malam hari. Jangan menarik
-                        paksa
-                        gerbang saat terbuka lebar, biarkan menutup sendiri secara otomatis.</li>
+                        paksa gerbang saat terbuka lebar, biarkan menutup sendiri secara otomatis.</li>
                     <li>Parkir motor di dalam rumah daun hanya untuk penghuni kos yang memiliki label dan motornya tidak
-                        bocor oli. Parkirlah motor dengan rapi sesuai garis kuning di lantai. Motor teman harap parkir
-                        di
-                        luar gerbang.</li>
+                        bocor oli. Parkirlah motor dengan rapi sesuai garis kuning di lantai. Motor teman harap parkir di luar gerbang.</li>
                     <li>Semua penghuni kos diharapkan menjaga ketenangan dengan cara:
                         <ul>
                             <li>Mengingatkan teman/tamunya agar tidak gaduh.</li>
@@ -182,30 +167,19 @@
                     </li>
                     <li>Dilarang membawa dan memelihara hewan peliharaan di dalam kosan.</li>
                     <li>Dilarang mencoret, memasang stiker/double tape/paku pada dinding kamar/lemari/meja, atau
-                        mengubah
-                        warna cat kamar. Pelanggaran akan dikenakan biaya perbaikan hingga Rp500.000.</li>
-                    <li>Dilarang keras membawa, menyimpan, dan mengonsumsi obat-obatan terlarang, minuman keras, serta
-                        berjudi di rumah daun.</li>
-                    <li>Dilarang melakukan keributan, perkelahian, tindakan asusila, pencurian, atau perusakan barang
-                        milik
-                        penghuni lain atau inventaris rumah daun.</li>
-                    <li>Demi keamanan, orang luar tidak diperbolehkan masuk ke dalam rumah daun. Penghuni kos diharapkan
-                        menjemput teman dan mengambil pesanan makanan di gerbang.</li>
-                    <li>Dilarang membuang sampah sisa makanan ke dalam saluran pembuangan di kamar mandi. Cuci piring di
-                        dapur/pantry yang tersedia di setiap lantai.</li>
-                    <li>Pembayaran sewa kamar hanya sah dan mendapatkan kamar jika transfer ke pemilik kos atas nama
-                        Bapak
-                        Hari. Konfirmasi ketersediaan kamar dan perpanjangan sewa juga hanya dilakukan dengan pemilik
-                        kos.
-                    </li>
-                    <li>Kamar disewakan bagi penyewa yang dapat mengikuti aturan kos dan bersedia menggunakan jasa
-                        laundry
-                        di rumah daun.</li>
+                        mengubah warna cat kamar. Pelanggaran akan dikenakan biaya perbaikan hingga Rp500.000.</li>
+                    <li>Dilarang keras membawa, menyimpan, dan mengonsumsi obat-obatan terlarang, minuman keras, serta berjudi di rumah daun.</li>
+                    <li>Dilarang melakukan keributan, perkelahian, tindakan asusila, pencurian, atau perusakan barang milik penghuni lain atau inventaris rumah daun.</li>
+                    <li>Demi keamanan, orang luar tidak diperbolehkan masuk ke dalam rumah daun. Penghuni kos diharapkan menjemput teman dan mengambil pesanan makanan di gerbang.</li>
+                    <li>Dilarang membuang sampah sisa makanan ke dalam saluran pembuangan di kamar mandi. Cuci piring di dapur/pantry yang tersedia di setiap lantai.</li>
+                    <li>Pembayaran sewa kamar hanya sah dan mendapatkan kamar jika transfer ke pemilik kos atas nama Bapak Hari. Konfirmasi ketersediaan kamar dan perpanjangan sewa juga hanya dilakukan dengan pemilik kos.</li>
+                    <li>Kamar disewakan bagi penyewa yang dapat mengikuti aturan kos dan bersedia menggunakan jasa laundry di rumah daun.</li>
                 </ul>
             </div>
         </div>
     </div>
 </body>
+
 <script>
     const hargaKamarData = {
         'Tipe A': 14000000,
@@ -220,6 +194,7 @@
     const modalHarga = document.getElementById('modalHarga');
     const modalTipeKamarInput = document.getElementById('modalTipeKamarInput');
     const modalHargaInput = document.getElementById('modalHargaInput');
+    const modalDpInput = document.getElementById('modalDpInput');
     const bookingModal = document.getElementById('bookingModal');
     const bookingButton = document.getElementById('bookingButton');
     const closeModal = document.getElementById('closeModal');
@@ -237,7 +212,8 @@
         modalTipeKamar.textContent = selectedTipe;
         modalHarga.textContent = harga.toLocaleString('id-ID');
         modalTipeKamarInput.value = selectedTipe;
-        modalHargaInput.value = harga.toLocaleString('id-ID');
+        modalHargaInput.value = harga;
+        modalDpInput.value = 2000000;
 
         bookingModal.classList.remove('hidden');
     });
