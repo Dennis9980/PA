@@ -13,7 +13,7 @@ class Penghuni extends Model
     protected $table = 'detail_penghuni';
 
     protected $fillable = [
-        'id_user', 'id_kos', 'id_kamar_kos', 'tanggal_mulai', 'tanggal_selesai', 'status_pembayaran'
+        'id_user', 'id_kamar_kos', 'tanggal_mulai', 'tanggal_selesai', 'status_pembayaran', 'phone', 'address'
     ];
 
     protected function casts(): array
@@ -29,16 +29,13 @@ class Penghuni extends Model
         return $this->hasOne(User::class, 'id', 'id_user');
     }
 
-    public function kos()
-    {
-        return $this->belongsTo(Kos::class, 'id_kos'); // Sesuaikan foreign key jika berbeda
-    }
+    
 
-    // public function kamarKos()
-    // {
-    //     return $this->belongsTo(KamarKos::class, 'id_kamar_kos'); 
-    //     // Assuming you have a 'KamarKos' model
-    // }
+    public function kamarKos()
+    {
+        return $this->belongsTo(KamarKos::class, 'id_kamar_kos'); 
+        // Assuming you have a 'KamarKos' model
+    }
 
     public function scopeFilter($query, array $filters)
     {

@@ -23,12 +23,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
             'username' => 'user123',
             'password' => Hash::make('12345678'),
-            'phone' => '085155370210',
-            'address' => 'jember'
         ]);
-
-        Kos::factory(1) // Buat 10 data kos
-            ->hasKamarKos(5) // Setiap kos memiliki 5 kamar
-            ->create();
+        $this->call(KamarKosSeeder::class); 
+        
     }
 }

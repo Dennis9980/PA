@@ -10,9 +10,11 @@ class KamarKos extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['id_kos', 'nomor_kamar'];
-    public function kos()
+    protected $fillable = ['nomor_kamar'];
+
+    public function penghuni()
     {
-        return $this->belongsTo(Kos::class, 'id_kos');
+        return $this->hasOne(Penghuni::class, 'id_kamar_kos'); // Atau hasMany jika satu kamar bisa punya banyak penghuni
     }
+
 }

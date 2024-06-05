@@ -14,11 +14,8 @@ return new class extends Migration
     {
         Schema::create('kamar_kos', function (Blueprint $table) {
             $table->uuid('id')->primary()->default(DB::raw('(UUID())'));
-            $table->uuid('id_kos');
             $table->string('nomor_kamar');
             $table->timestamps();
-
-            $table->foreign('id_kos')->references('id')->on('kos')->onDelete('cascade');
         });
     }
 

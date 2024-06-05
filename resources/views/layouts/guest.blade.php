@@ -17,7 +17,6 @@
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    /
         <div class="min-h-screen grid grid-cols-1 place-items-center lg:grid-cols-2 lg:place-content-around lg:place-items-center p-6 bg-side-bar-color">
            <div class="hero">
                <div class="hero-content">

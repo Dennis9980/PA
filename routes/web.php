@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KamarKosController;
 use App\Http\Controllers\KebersihanController;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\LaundryController;
@@ -16,7 +17,7 @@ Route::get('/booking', function () {
     return view('layouts.guest.booking');
 });
 
-Route::get('/dashboard', [KosController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [KamarKosController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

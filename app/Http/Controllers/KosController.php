@@ -12,8 +12,7 @@ class KosController extends Controller
      */
     public function index()
     {
-        $data = Kos::get();
-        return view('pemilik.home', compact('data'));
+        
     }
 
     /**
