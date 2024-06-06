@@ -19,9 +19,9 @@ Route::get('/', function () {
 });
 
 // Route untuk halaman booking
-Route::get('/booking', function () {
-    return view('layouts.guest.booking');
-});
+// Route::get('/booking', function () {
+//     return view('layouts.guest.booking');
+// });
 
 Route::get('/dashboard', [KamarKosController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -87,9 +87,10 @@ Route::middleware(['auth', 'penghuni'])->group(function () {
 });
 
 // Route untuk halaman booking dan proses checkout
-Route::get('/', [BookingController::class, 'index']);
+Route::get('/booking', [BookingController::class, 'index'])->name('bookingGuest');
+Route::get('/dataCheckout/{orderId}', [BookingController::class, 'checkoutView'])->name('dataCheck');
 Route::post('/checkout', [BookingController::class, 'checkout']);
 
 // Route untuk notification dari Midtrans
-Route::post('/midtrans-callback', [BookingController::class, 'notificationHandler']);
+// Route::post('/midtrans-callback', [BookingController::class, 'notificationHandler']);
 

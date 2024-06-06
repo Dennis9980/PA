@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Booking;
 use \Midtrans;
+use Carbon\Carbon;
+use App\Models\Booking;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BookingController extends Controller
 {
@@ -15,7 +17,6 @@ class BookingController extends Controller
 
     public function checkout(Request $request)
     {
-        // Validate the request
         $request->validate([
             'nama_lengkap' => 'required|string',
             'no_telpon' => 'required|string',
@@ -26,23 +27,28 @@ class BookingController extends Controller
             'modalDpInput' => 'required|integer',
         ]);
 
-        // Add status to the request data
-        $request->merge(['status' => 'Unpaid']);
+        $formattedTglMasuk = Carbon::parse($request->tgl_masuk)->format('Y-m-d');
+        // $orderId = 'bk-' . time();
 
-        // Create booking record
         $booking = Booking::create([
             'nama' => $request->nama_lengkap,
+            // 'booking_id' => $orderId,
             'phone' => $request->no_telpon,
             'email' => $request->email,
-            'durasi_tinggal' => $request->tgl_masuk,
+            'tanggal_mulai' => $formattedTglMasuk,
             'total_harga' => $request->modalHargaInput,
             'status' => 'Unpaid',
             'tipe_kos' => $request->modalTipeKamarInput,
             'Dp' => $request->modalDpInput,
         ]);
 
-        // Generate unique order ID
-        $orderId = $booking->id . '-' . time();
+        return redirect()->route('dataCheck', ['orderId' => $booking->id])
+            ->with('request', $request->all());
+    }
+
+    public function checkoutView(Request $request, $bookingId)
+    {
+        $dataBooking = Booking::where('id', $bookingId)->first();
 
         // Midtrans configuration
         \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
@@ -50,11 +56,10 @@ class BookingController extends Controller
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
 
-        // Create transaction details
         $params = array(
             'transaction_details' => array(
-                'order_id' => $orderId,
-                'gross_amount' => $booking->Dp,
+                'order_id' => $bookingId,
+                'gross_amount' => $dataBooking->Dp,
             ),
             'customer_details' => array(
                 'first_name' => $request->nama_lengkap,
@@ -63,25 +68,45 @@ class BookingController extends Controller
             ),
         );
 
-        // Get Snap Token
-        $snapToken = \Midtrans\Snap::getSnapToken($params);
-        return view('layouts.guest.checkout', compact('snapToken', 'booking'));
-        
-    }
-    public function notificationHandler(Request $request)
-    {
-        // Validasi signature dari Midtrans
-        $serverKey = config('services.midtrans.server_key');
-        $hashed = hash("sha512", $request->order_id . $request->gross_amount . $serverKey);
-
-        if ($hashed == $request->signature_key) {
-            // Ubah status pesanan menjadi "Paid"
-            $booking = Booking::find($request->order_id);
-            $booking->update(['status' => 'Paid']);
+        // Get Snap Token, generate new one if it doesn't exist
+        $snapToken = $dataBooking->snap_token;
+        if (empty($snapToken)) {
+            try {
+                $snapToken = \Midtrans\Snap::getSnapToken($params);
+                $dataBooking->update(['snap_token' => $snapToken]);
+            } catch (\Exception $e) {
+                // Handle Midtrans error, for example:
+                return back()->withErrors(['midtrans' => 'Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.']);
+            }
         }
 
-        // Berikan respons OK ke Midtrans
-        return response('OK', 200);
+        return view('layouts.guest.checkout', compact('snapToken', 'dataBooking'));
     }
 
+    public function notificationHandler(Request $request)
+    {
+        $serverKey = config('services.midtrans.server_key');
+        $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+
+        if ($hashed == $request->signature_key) {
+            // Signature valid
+            try {
+                $booking = Booking::where('id', $request->order_id)->first();
+                // Pastikan transaksi berhasil sebelum update status
+                if ($request->transaction_status == 'settlement') { // Contoh status sukses
+                    $booking->update(['status' => 'Paid']);
+                } else {
+                    Log::warning("Midtrans callback: Transaction not successful", ['data' => $request->all()]);
+                }
+            } catch (\Exception $e) {
+                Log::error("Error processing Midtrans callback: " . $e->getMessage(), ['data' => $request->all()]);
+            }
+        } else {
+            // Signature tidak valid
+            Log::error("Invalid Midtrans callback signature", ['data' => $request->all()]);
+            return response('Unauthorized', 401);
+        }
+
+        return response()->json(['message' => 'Notification received'], 200);
+    }
 }

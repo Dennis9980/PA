@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('booking', function (Blueprint $table) {
-            $table->bigInteger('total_harga')->after('durasi_tinggal');
+            $table->bigInteger('total_harga')->after('tanggal_mulai');
             $table->enum('status', ['Unpaid', 'Paid'])->after('total_harga');
         });
     }

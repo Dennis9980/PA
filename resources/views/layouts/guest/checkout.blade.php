@@ -39,13 +39,13 @@
                     <div class="bg-white p-5 drop-shadow-xl rounded-xl">
                         <h1 class="text-2xl font-bold mb-4">Detail Pesanan</h1>
                         <ul class="max-w-md space-y-1 list-disc list-inside">
-                            <li>Nama: {{ $booking->nama }}</li>
-                            <li>No. Telepon: {{ $booking->phone }}</li>
-                            <li>Email: {{ $booking->email }}</li>
-                            <li>Tanggal Masuk: {{ $booking->durasi_tinggal }}</li>
-                            <li>Tipe Kos: {{ $booking->tipe_kos }}</li>
-                            <li>Total Harga: {{ $booking->total_harga }}</li>
-                            <li>Dp: {{ $booking->Dp }}</li>
+                            <li>Nama: {{ $dataBooking->nama }}</li>
+                            <li>No. Telepon: {{ $dataBooking->phone }}</li>
+                            <li>Email: {{ $dataBooking->email }}</li>
+                            <li>Tanggal Masuk: {{ $dataBooking->durasi_tinggal }}</li>
+                            <li>Tipe Kos: {{ $dataBooking->tipe_kos }}</li>
+                            <li>Total Harga: {{ $dataBooking->total_harga }}</li>
+                            <li>Dp: {{ $dataBooking->Dp }}</li>
                         </ul>
                         <button id="pay-button" class="bg-blue-500 text-white font-bold py-3 px-6 mt-4 rounded hover:bg-blue-700">Bayar</button>
                     </div>
@@ -123,7 +123,7 @@
             window.snap.pay('{{ $snapToken }}', {
                 onSuccess: function(result){
                     /* You may add your own implementation here */
-                    alert("payment success!"); console.log(result);
+                    window.location.href = `/booking`;
                 },
                 onPending: function(result){
                     /* You may add your own implementation here */
