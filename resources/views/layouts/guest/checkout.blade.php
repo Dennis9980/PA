@@ -123,7 +123,8 @@
             window.snap.pay('{{ $snapToken }}', {
                 onSuccess: function(result){
                     /* You may add your own implementation here */
-                    window.location.href = `/booking`;
+                    var transactionId = result.order_id; 
+                    window.location.href = `/invoice/${transactionId}`;
                 },
                 onPending: function(result){
                     /* You may add your own implementation here */

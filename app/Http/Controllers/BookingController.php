@@ -14,6 +14,11 @@ class BookingController extends Controller
     {
         return view('layouts.guest.booking');
     }
+    public function invoice($id){
+        $data = Booking::findOrFail($id);
+
+        return view('layouts.guest.invoice', compact('data'));
+    }
 
     public function checkout(Request $request)
     {
