@@ -13,9 +13,12 @@ class KamarKosSeeder extends Seeder
      */
     public function run(): void
     {
-        KamarKos::create([
-            'id_kos' => '29f0f335-05de-11ef-a39e-7c10c927aa13',
-            'nomor_kamar' => 'kamar1',
-        ]);
+    
+        // Buat 20 KamarKos
+        for ($i = 1; $i <= 20; $i++) {
+            KamarKos::create([
+                'nomor_kamar' => str_pad($i, 2, '0', STR_PAD_LEFT), // Menambahkan '0' di depan jika nomor kamar < 10
+            ]);
+        }
     }
 }

@@ -15,10 +15,11 @@ return new class extends Migration
         Schema::create('booking', function (Blueprint $table) {
             $table->uuid('id')->primary()->default(DB::raw('(UUID())'));
             $table->uuid('id_kos');
+            $table->string('snap_token')->nullable();
             $table->string('nama');
             $table->string('phone');
             $table->string('email');
-            $table->string('durasi_tinggal');
+            $table->date('tanggal_mulai');
             $table->timestamps();
         });
     }

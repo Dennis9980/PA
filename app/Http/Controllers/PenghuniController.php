@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use App\Models\KamarKos;
 use App\Models\Penghuni;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -17,12 +18,14 @@ class PenghuniController extends Controller
     public function index(Request $request)
     {
         $search = request('search');
+        $dataKos = KamarKos::doesntHave('penghuni')->get(); 
+
 
         $data = User::filter(['role' => 'penghuni', $search])
             ->search(['search' => $search])
             ->paginate(6);
 
-        return view('layouts.penghuni.datapenghuni', compact('data'));
+        return view('layouts.penghuni.datapenghuni', compact('data', 'dataKos'));
     }
 
     public function edit(Request $request, $id)
@@ -34,35 +37,36 @@ class PenghuniController extends Controller
             'phone' => ['nullable', 'string'],
             'address' => ['nullable', 'string']
         ]);
-
+        
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
-
+        
         $user = User::findOrFail($id);
-
+        
         // Update the user's properties
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
-            'phone' => $request->phone,
-            'address' => $request->address,
         ]);
-
+        
         // Update atau buat data Penghuni jika role adalah 'penghuni'
         if ($user->role === 'penghuni') {
+            
             $user->penghuni()->updateOrCreate(
                 ['id_user' => $id], // Kondisi pencarian
                 [
-                    'id_kos' => $request->id_kos,
                     'id_kamar_kos' => $request->id_kamar_kos,
                     'tanggal_mulai' => $request->tanggal_mulai,
                     'tanggal_selesai' => $request->tanggal_selesai,
+                    'phone' => $request->phone,
+                    'address' =>$request->address,
                     'status_pembayaran' => 'sudah',
-                ]
-            );
-        }
+                    ]
+                );
+            }
+            // dd($penghuni);
 
 
         return back()->with('success');

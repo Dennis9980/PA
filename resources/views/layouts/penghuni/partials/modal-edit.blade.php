@@ -1,5 +1,5 @@
-<div id="static-modal{{ $penghuni->id }}" tabindex="-1" aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full">
+<div id="static-modal{{ $penghuni->id }}" tabindex="-1" aria-hidden="true" 
+    class="hidden backdrop-blur-sm overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -31,8 +31,8 @@
             <!-- Modal body -->
             <form action="{{ route('editPenghuni', $penghuni->id) }}" method="POST">
                 @csrf
-                <div class="grid gap-4 mb-4 grid-cols-2 p-6">
-                    <div class="col-span-2">
+                <div class="grid gap-4 grid-cols-2 px-6 pt-6">
+                    <div class="col-span-2 sm:col-span-1">
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                         <input type="text" id="name"
@@ -41,6 +41,20 @@
                         @error('email')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <label for="kos"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Kamar</label>
+                        <select  id="kos" name="id_kamar_kos"
+                            class="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                           
+                            <option selected>Kamar {{ $penghuni->penghuni->kamarKos->nomor_kamar ?? 'Pilih Kamar' }}</option>
+                            @foreach ($dataKos as $data)
+                                <option class="m-4 capitalize text-md" value="{{ $data->id }}">
+                                    Kamar {{ $data->nomor_kamar }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name"
@@ -55,7 +69,7 @@
                         </label>
                         <input type="text" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Tulis No Telepon" name="phone" value="{{ $penghuni->phone }}">
+                            placeholder="Tulis No Telepon" name="phone" value="{{ $penghuni->penghuni->phone ?? 'belum di atur' }}">
                     </div>
                     <div class="col-span-2">
                         <label for="name"
@@ -86,19 +100,13 @@
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
                         <textarea name="address" id="name" cols="10" rows="3"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ $penghuni->address }}</textarea>
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">{{ $penghuni->penghuni->address ?? 'belum di atur' }}</textarea>
                     </div>
                 </div>
-                <input type="text">
-                <input type="text" name="id_kos" value="{{ $penghuni->penghuni->id_kos ?? 'nggk ada' }}">
-                <input type="text" name="id_kamar_kos" value="{{ $penghuni->penghuni->id_kamar_kos ?? 'nggk ada' }}">
-                <button type="submit">submit</button>
+                <div class="flex w-full  justify-center items-center p-5">
+                    <button type="submit" class="btn text-white btn-primary w-full">Submit</button>
+                </div>
             </form>
-            {{-- <form action="{{ route('makeDetail') }}" method="POST">
-                @csrf
-
-                <button type="submit">submit</button>
-            </form> --}}
         </div>
     </div>
 </div>

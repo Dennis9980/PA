@@ -28,7 +28,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="relative overflow-x-auto">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <thead class="text-xs text-white uppercase bg-side-bar-color dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     Nama
@@ -48,40 +48,46 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $penghuni)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <th scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{ $penghuni->name }}
-                                    </th>
-                                    <td class="px-6 py-4">
-                                        {{ $penghuni->username }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $penghuni->phone ?? 'Tidak mencantumkan' }}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {{ $penghuni->email }}
-                                    </td>
-                                    <td class="py-4 flex gap-1">
-                                        <button class="m-1" data-modal-target="static-modal{{ $penghuni->id }}"
-                                            data-modal-toggle="static-modal{{ $penghuni->id }}">
-                                            <i class="fa-solid fa-circle-info fa-xl" style="color: #00c220;"></i>
-                                        </button>
-                                        <button>
-                                            <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"></i>
-                                        </button>
-                                        <form action="{{ route('deletePenghuni', $penghuni->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="m-1" type="submit">
+                            @if ($data->count())
+
+                                @foreach ($data as $penghuni)
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $penghuni->name }}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            {{ $penghuni->username }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $penghuni->penghuni->phone ?? 'Tidak mencantumkan' }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $penghuni->email }}
+                                        </td>
+                                        <td class="py-4 flex gap-1">
+                                            <button class="m-1" data-modal-target="detail-modal{{ $penghuni->id }}"
+                                                data-modal-toggle="detail-modal{{ $penghuni->id }}">
+                                                <i class="fa-solid fa-circle-info fa-xl" style="color: #00c220;"></i>
+                                            </button>
+                                            <button class="m-1" data-modal-target="static-modal{{ $penghuni->id }}"
+                                                data-modal-toggle="static-modal{{ $penghuni->id }}">
+                                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #ffa200;"></i>
+                                            </button>
+
+                                            <button class="m-1" data-modal-target="delete-modal{{ $penghuni->id }}"
+                                                data-modal-toggle="delete-modal{{ $penghuni->id }}">
                                                 <i class="fa-solid fa-trash fa-lg" style="color: #ff0000;"></i>
                                             </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                @include('layouts.penghuni.partials.modal-edit')
-                            @endforeach
+                                        </td>
+                                    </tr>
+                                    @include('layouts.penghuni.partials.modal-detail')
+                                    @include('layouts.penghuni.partials.modal-edit')
+                                    @include('layouts.penghuni.partials.modal-delete')
+                                @endforeach
+                            @else
+                                <td colspan="6" class="text-center py-4 font-bold text-lg">Belum Ada Penghuni</td>
+                            @endif
                         </tbody>
                     </table>
                 </div>
