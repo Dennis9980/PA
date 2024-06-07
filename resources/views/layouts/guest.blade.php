@@ -20,7 +20,7 @@
         <div class="min-h-screen grid grid-cols-1 place-items-center lg:grid-cols-2 lg:place-content-around lg:place-items-center p-6 bg-side-bar-color">
            <div class="hero">
                <div class="hero-content">
-                   <div class="dark:text-white">
+                   <div class="text-white">
                        <h1 class="text-5xl font-extrabold">Selamat Datang di MaKos!</h1>
                        <p class="py-6">Halaman Login ini hanya dapat digunakan oleh penghuni kos, belum jadi penghuni?</p>
                        <button class="btn btn-info bg-menu-hover">Booking Now</button>
@@ -28,7 +28,7 @@
                </div>
            </div>
             <div
-                class="w-full sm:max-w-sm mt-6 px-6 py-4 rounded-lg bg-button-submit shadow-md overflow-hidden sm:rounded-lg">
+                class="w-full sm:max-w-sm mt-6 px-6 py-4 rounded-lg bg-orange-100 shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>

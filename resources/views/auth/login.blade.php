@@ -1,5 +1,4 @@
 <x-guest-layout>
-    
     <div class="flex justify-center pb-4">
         <a href="/">
             <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
@@ -40,7 +39,7 @@
                 <input id="remember_me" type="checkbox"
                     class="checkbox border-orange-400 checked:border-indigo-800 [--chkbg:theme(colors.indigo.600)] [--chkfg:orange] checkbox-xs"
                     name="remember">
-                <span class="ms-2 text-sm text-white">{{ __('Remember me') }}</span>
+                <span class="ms-2 text-sm text-black">{{ __('Remember me') }}</span>
             </label>
         </div>
 
@@ -50,7 +49,7 @@
             </x-primary-button>
 
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-white hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                <a class="underline text-sm text-black hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                     href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>

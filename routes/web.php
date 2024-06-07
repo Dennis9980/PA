@@ -7,6 +7,7 @@ use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\PenghuniController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\KelolaBooking;
 use App\Http\Middleware\Penghuni;
 use App\Models\Laundry;
 use Illuminate\Support\Facades\Route;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // Route untuk halaman landing
 Route::get('/', function () {
     return view('layouts.guest.landingPage');
-});
+})->name('landingPage');
 
 // Route untuk halaman booking
 // Route::get('/booking', function () {
@@ -57,9 +58,8 @@ Route::middleware(['auth', 'gabungan'])->group(function () {
     Route::delete('data-kebersihan/{id}/delete', [KebersihanController::class, 'destroy'])->name('deleteDana');
 
     // Route untuk data booking
-    Route::get('data-booking', function(){
-        return view('layouts.dataBooking');
-    })->name('dataBooking');
+    Route::get('data-booking', [KelolaBooking::class, 'index'])->name('dataBooking');
+    Route::get('data-booking/delete', [KelolaBooking::class, 'destoy'])->name('deleteBooking');
 });
 
 // Middleware untuk pemilik
@@ -91,6 +91,7 @@ Route::get('/booking', [BookingController::class, 'index'])->name('bookingGuest'
 Route::get('/dataCheckout/{orderId}', [BookingController::class, 'checkoutView'])->name('dataCheck');
 Route::post('/checkout', [BookingController::class, 'checkout']);
 
+Route::get('/invoice/{id}', [BookingController::class, 'invoice'])->name('invoice');
 // Route untuk notification dari Midtrans
 // Route::post('/midtrans-callback', [BookingController::class, 'notificationHandler']);
 
