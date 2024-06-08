@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-guest-layout>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <title>MaKos</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-</head>
-
-<body class="bg-gray-100">
-    @include('layouts.guest.partials.navbar-guest')
-    <!-- Konten dengan background gambar -->
     <section>
         <div class="relative">
             <x-bg-landing-page />
@@ -28,7 +9,9 @@
                     Hidup Bahagia, <br>
                     Temukan Kosan Impianmu Di Sini!
                 </h1>
-                <button class="btn btn-error text-lg">Booking</button>
+                <a href="{{ route('bookingGuest') }}">
+                    <button class="btn btn-error text-lg">Booking</button>
+                </a>
                 <img src="/img/plants.png" alt="Logo" class="h-32 w-40 mt-10">
             </div>
         </div>
@@ -73,9 +56,9 @@
                 <!-- Kotak Pertama -->
                 <div class="carousel-item">
                     <!-- Gambar Pertama -->
-                        <img src="/img/lp1.jpg" alt="Gambar 1" class="static rounded-box">
-                        <h2 class="absolute bg-orange-500 rounded-tl-lg py-2 px-4 rounded-br-lg text-white">Tipe A</h2>
-                        <p class="absolute bg-orange-500 rounded-t-lg p-2 text-white">Rp. 1.000.000</p>
+                    <img src="/img/lp1.jpg" alt="Gambar 1" class="static rounded-box">
+                    <h2 class="absolute bg-orange-500 rounded-tl-lg py-2 px-4 rounded-br-lg text-white">Tipe A</h2>
+                    <p class="absolute bg-orange-500 rounded-t-lg p-2 text-white">Rp. 1.000.000</p>
                 </div>
                 <!-- Kotak Kedua -->
                 <div class="carousel-item">
@@ -89,7 +72,7 @@
                     <img src="/img/lp3.jpg" alt="Gambar 3" class="relative rounded-box">
                     <h2 class="absolute bg-orange-500 rounded-tl-lg py-2 px-4 rounded-br-lg text-white">Tipe C</h2>
                 </div>
-                
+
             </div>
         </div>
     </section>
@@ -135,25 +118,28 @@
             </div>
         </div>
     </section>
-</body>
+</x-guest-layout>
+
 <script>
     document.querySelectorAll('.dropdown-content a[href^="#"]').forEach(link => {
-    link.addEventListener('click', function (event) {
-        event.preventDefault();
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
 
-        // Close the dropdown menu
-        link.closest('.dropdown').classList.remove('active'); 
+            // Close the dropdown menu
+            link.closest('.dropdown').classList.remove('active');
 
-        const targetId = this.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
 
-        if (targetSection) {
-            const offset = 50; // Adjust for header or other elements as needed
-            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest', top: targetSection.offsetTop - offset });
-        }
+            if (targetSection) {
+                const offset = 50; // Adjust for header or other elements as needed
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                    inline: 'nearest',
+                    top: targetSection.offsetTop - offset
+                });
+            }
+        });
     });
-});
-
 </script>
-
-</html>

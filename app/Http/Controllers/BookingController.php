@@ -14,6 +14,11 @@ class BookingController extends Controller
     {
         return view('layouts.guest.booking');
     }
+    public function invoice($id){
+        $data = Booking::findOrFail($id);
+
+        return view('layouts.guest.invoice', compact('data'));
+    }
 
     public function checkout(Request $request)
     {
@@ -93,7 +98,7 @@ class BookingController extends Controller
             try {
                 $booking = Booking::where('id', $request->order_id)->first();
                 // Pastikan transaksi berhasil sebelum update status
-                if ($request->transaction_status == 'settlement') { // Contoh status sukses
+                if ($request->transaction_status == 'settlement' || $request->transaction_status == 'capture') { // Contoh status sukses
                     $booking->update(['status' => 'Paid']);
                 } else {
                     Log::warning("Midtrans callback: Transaction not successful", ['data' => $request->all()]);

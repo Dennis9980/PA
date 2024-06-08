@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="https://kit.fontawesome.com/d2f94ceef2.js" crossorigin="anonymous"></script>
-    <title>Document</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="bg-white font-sans">
-    @include('layouts.guest.partials.navbar-guest')
-    <div class="mx-24 py-10">
-        <div class="flex flex-row justify-center gap-5">
-            <div class="carousel w-7/12 gap-4 drop-shadow-2xl">
+<x-guest-layout>
+    <div class="flex flex-col justify-center items-center lg:mx-24 py-10">
+        <div class="flex flex-col lg:flex-row justify-center items-center lg:gap-5">
+            <div class="carousel pb-4 w-10/12 lg:w-7/12 lg:gap-4 ">
                 <div id="item1" class="carousel-item w-full">
                     <img src="/img/lp2.jpg" alt="Gambar 2" class="rounded-box">
                 </div>
@@ -29,7 +16,7 @@
                 </div>
             </div>
 
-            <div class="p-6 bg-white border border-gray-200 rounded-2xl h-max text-black shadow-2xl w-4/12">
+            <div class="p-6 bg-white rounded-2xl h-max text-black shadow-lg lg:w-4/12">
                 <h1 class="text-2xl uppercase font-semibold">Fasilitas Kamar</h1>
                 <div class="">
                     <ul class="max-w-md space-y-1 list-disc list-inside">
@@ -61,7 +48,7 @@
             </div>
 
             <div id="bookingModal"
-                class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center"
+                class="hiden fixed inset-0 backdrop-blur-sm overflow-y-auto h-full w-full z-50 flex items-center justify-center px-5"
                 x-data="{ open: false }">
                 <div class="relative p-5 border w-96 shadow-lg rounded-md bg-white">
                     <div class="mt-3">
@@ -112,8 +99,8 @@
             </div>
         </div>
 
-        <div class="text-black grid grid-cols-2 px-10">
-            <div class="bg-white p-5 m-5 drop-shadow-xl rounded-xl">
+        <div class="text-black grid lg:grid-cols-2 px-10 space-y-3 py-5">
+            <div class="bg-white p-4 lg:m-5 drop-shadow-xl rounded-lg">
                 <h1 class="text-xl uppercase font-semibold">Spesifikasi Kamar (Tipe A)</h1>
                 <div class="pl-4">
                     <ul class="max-w-md space-y-1 list-disc list-inside">
@@ -124,7 +111,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="bg-white p-5 m-5 drop-shadow-xl rounded-xl">
+            <div class="bg-white p-4 lg:m-5 drop-shadow-xl rounded-lg">
                 <h1 class="text-xl uppercase font-semibold">Spesifikasi Kamar (Tipe B)</h1>
                 <div class="pl-4">
                     <ul class="max-w-md space-y-1 list-disc list-inside">
@@ -137,8 +124,8 @@
             </div>
         </div>
 
-        <div class="px-24 text-black">
-            <div class="drop-shadow-2xl bg-white rounded-xl p-4">
+        <div class="lg:px-24 text-black">
+            <div class="px-7 lg:drop-shadow-2xl lg:bg-white lg:rounded-xl lg:p-4">
                 <h1 class="uppercase text-center text-2xl py-2 font-semibold">Peraturan Kamar</h1>
                 <ul class="space-y-2 list-disc list-inside">
                     <li>Akses masuk ke rumah daun 24 jam menggunakan access card, namun tidak berlaku untuk teman.</li>
@@ -178,7 +165,8 @@
             </div>
         </div>
     </div>
-</body>
+</x-guest-layout>
+
 
 <script>
     const hargaKamarData = {
@@ -223,4 +211,3 @@
     });
 </script>
 
-</html>
