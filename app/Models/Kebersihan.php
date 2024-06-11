@@ -16,7 +16,8 @@ class Kebersihan extends Model
         'id_kamar',
         'dana_kebersihan',
         'keterangan',
-        'tanggal_kebersihan'
+        'tanggal_kebersihan',
+        'status'
     ];
 
     public function scopeSearch($query, $keyword)

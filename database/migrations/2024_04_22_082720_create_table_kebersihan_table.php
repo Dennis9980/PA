@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('dana_kebersihan')->default(0);
             $table->text('keterangan');
             $table->date('tanggal_kebersihan');
+            $table->enum('status', ['sudah', 'belum']);
             $table->timestamps();
 
             $table->foreign('id_penghuni')->references('id')->on('users');
