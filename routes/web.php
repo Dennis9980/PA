@@ -88,8 +88,9 @@ Route::middleware(['auth', 'penghuni'])->group(function () {
 
 // Route untuk halaman booking dan proses checkout
 Route::get('/booking', [BookingController::class, 'index'])->name('bookingGuest');
-Route::get('/dataCheckout/{orderId}', [BookingController::class, 'checkoutView'])->name('dataCheck');
-Route::post('/checkout', [BookingController::class, 'checkout']);
+Route::post('/checkout', [BookingController::class, 'checkout'])->name('chechoutBooking');
+Route::delete('/booking/delete/{id}', [BookingController::class, 'deleteBooking'])->name('deleteBooking');
+
 
 Route::get('/invoice/{id}', [BookingController::class, 'invoice'])->name('invoice');
 // Route untuk notification dari Midtrans
