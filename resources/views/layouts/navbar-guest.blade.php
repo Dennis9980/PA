@@ -24,10 +24,17 @@
                 </a>
                 @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}"
-                            class="flex items-center p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
-                            Dashboard
-                        </a>
+                        @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
+                            <a href="{{ route('dashboard') }}"
+                                class="flex items-center p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
+                                Dashboard
+                            </a>
+                        @else
+                            <a href="{{ route('penghuniDash') }}"
+                                class="flex items-center p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
+                                Dashboard
+                            </a>
+                        @endif
                     @else
                         <a href="{{ route('login') }}"
                             class="flex items-center p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
@@ -51,10 +58,17 @@
             </a>
             @if (Route::has('login'))
                 @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="flex items-center ml-4 p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
-                        Dashboard
-                    </a>
+                    @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
+                        <a href="{{ route('dashboard') }}"
+                            class="flex items-center ml-4 p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
+                            Dashboard
+                        </a>
+                    @else
+                        <a href="{{ route('penghuniDash') }}"
+                            class="flex items-center ml-4 p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
+                            Dashboard
+                        </a>
+                    @endif
                 @else
                     <a href="{{ route('login') }}"
                         class="flex items-center ml-4 p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
