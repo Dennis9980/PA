@@ -39,6 +39,7 @@ class KebersihanController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $validator = Validator::make($request->all(), [
             'penghuni' => ['required'],
             'dana' => ['required'],

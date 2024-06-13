@@ -14,7 +14,8 @@ class BookingController extends Controller
     {
         return view('layouts.guest.booking');
     }
-    public function invoice($id){
+    public function invoice($id)
+    {
         $data = Booking::findOrFail($id);
 
         return view('layouts.guest.invoice', compact('data'));
@@ -22,6 +23,7 @@ class BookingController extends Controller
 
     public function checkout(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'nama_lengkap' => 'required|string',
             'no_telpon' => 'required|string',
@@ -47,8 +49,36 @@ class BookingController extends Controller
             'Dp' => $request->modalDpInput,
         ]);
 
-        return redirect()->route('dataCheck', ['orderId' => $booking->id])
-            ->with('request', $request->all());
+        $dataBooking = Booking::find($booking->id);
+
+        // Midtrans configuration
+        \Midtrans\Config::$serverKey = config('services.midtrans.server_key');
+        \Midtrans\Config::$isProduction = false; // or true if in production
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+
+        // Prepare Midtrans parameters
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $booking->id,
+                'gross_amount' => $dataBooking->Dp,
+            ),
+            'customer_details' => array(
+                'first_name' => $request->nama_lengkap,
+                'email' => $request->email,
+                'phone' => $request->no_telpon,
+            ),
+        );
+
+        try {
+            $snapToken = \Midtrans\Snap::getSnapToken($params);
+            $dataBooking->update(['snap_token' => $snapToken]);
+        } catch (\Exception $e) {
+            return back()->withErrors(['midtrans' => 'Terjadi kesalahan saat memproses pembayaran. Silakan coba lagi.']);
+        }
+
+        // Tampilkan modal dengan detail booking
+        return view('layouts.guest.booking', compact('dataBooking', 'snapToken'))->with('success', 'Booking berhasil dibuat!');
     }
 
     public function checkoutView(Request $request, $bookingId)
@@ -98,7 +128,7 @@ class BookingController extends Controller
             try {
                 $booking = Booking::where('id', $request->order_id)->first();
                 // Pastikan transaksi berhasil sebelum update status
-                if ($request->transaction_status == 'settlement') { // Contoh status sukses
+                if ($request->transaction_status == 'settlement' || $request->transaction_status == 'capture') { // Contoh status sukses
                     $booking->update(['status' => 'Paid']);
                 } else {
                     Log::warning("Midtrans callback: Transaction not successful", ['data' => $request->all()]);
@@ -113,5 +143,10 @@ class BookingController extends Controller
         }
 
         return response()->json(['message' => 'Notification received'], 200);
+    }
+
+    public function deleteBooking($id){
+        Booking::findOrFail($id)->delete();
+        return redirect()->route('bookingGuest')->with('success', 'berhasil hapus data');
     }
 }

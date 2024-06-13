@@ -11,8 +11,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-[#61876E] h-screen">
-    <div class="flex flex-col items-center justify-center h-screen">
+<body class="bg-[#61876E] h-full">
+    <div class="flex flex-col items-center justify-center lg:h-screen">
         <div class="bg-white p-4 rounded-2xl m-4 drop-shadow-2xl">
             <h1 class="text-xl font-bold mb-5 text-center mb-6">Makos</h1>
             <div class="flex flex-col gap-2 lg:flex-row lg:justify-between lg:gap-20">
@@ -61,7 +61,7 @@
             </div>
         </div>
     <a href="{{ route('landingPage') }}" class="z-10">
-        <button class="btn btn-primary z-10">Back To Makos</button>
+        <button class="btn btn-primary z-10 mb-5">Back To Makos</button>
     </a>
     </div>
 

@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\KamarKosController;
-use App\Http\Controllers\KebersihanController;
-use App\Http\Controllers\KosController;
-use App\Http\Controllers\LaundryController;
-use App\Http\Controllers\PenghuniController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\KelolaBooking;
-use App\Http\Middleware\Penghuni;
 use App\Models\Laundry;
+use App\Http\Middleware\Penghuni;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KelolaBooking;
+use App\Http\Controllers\KosController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\LaundryController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\KamarKosController;
+use App\Http\Controllers\PenghuniController;
+use App\Http\Controllers\KebersihanController;
+use App\Http\Controllers\PenghuniViewController;
 
 
 
@@ -24,7 +25,7 @@ Route::get('/', function () {
 //     return view('layouts.guest.booking');
 // });
 
-Route::get('/dashboard', [KamarKosController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [KamarKosController::class, 'index'])->middleware(['auth', 'pemilik'])->name('dashboard');
 
 // Middleware untuk pengguna yang telah terautentikasi
 Route::middleware('auth')->group(function () {
@@ -81,15 +82,15 @@ Route::middleware(['auth', 'pengurus'])->group(function () {
 
 // Middleware untuk penghuni
 Route::middleware(['auth', 'penghuni'])->group(function () {
-    Route::get('/penghuni-home', function(){
-        return view('penghuni.home');
-    })->name('penghuniDash');
+    Route::get('/penghuni-home', [PenghuniViewController::class, 'index'])->name('penghuniDash');
+
 });
 
 // Route untuk halaman booking dan proses checkout
 Route::get('/booking', [BookingController::class, 'index'])->name('bookingGuest');
-Route::get('/dataCheckout/{orderId}', [BookingController::class, 'checkoutView'])->name('dataCheck');
-Route::post('/checkout', [BookingController::class, 'checkout']);
+Route::post('/checkout', [BookingController::class, 'checkout'])->name('chechoutBooking');
+Route::delete('/booking/delete/{id}', [BookingController::class, 'deleteBooking'])->name('deleteBooking');
+
 
 Route::get('/invoice/{id}', [BookingController::class, 'invoice'])->name('invoice');
 // Route untuk notification dari Midtrans

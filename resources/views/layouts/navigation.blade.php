@@ -3,7 +3,7 @@
 <nav class="fixed top-0 z-30 w-full bg-side-bar-color border-b border-gray-200 dark:border-gray-700">
     <div class="px-3 py-4 lg:px-5 lg:pl-3">
         <div class="flex flex-row justify-between">
-            <div class="pl-72 py-1">
+            <div class="lg:pl-72 py-1">
                 @if (request()->routeIs('dataPenghuni'))
                     <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight ">
                         {{ __('Data Penghuni') }}
@@ -59,7 +59,6 @@
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
@@ -75,53 +74,73 @@
 
 <aside id="sidebar"
     class="fixed top-0 left-0 w-64 z-40 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-side-bar-color text-white min-h-screen pt-3 pr-2 close">
-    <div>
-        <div class="shrink-0 flex justify-center items-center py-10 rounded-full ">
-            <a href="{{ route('dashboard') }}">
-                <x-application-logo class="block h-9 w-auto fill-current" />
-            </a>
+    <div class="flex flex-col justify-between h-full">
+        <div>
+            <div class="shrink-0 flex justify-center items-center py-10 rounded-full ">
+                @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
+                    <a href="{{ route('dashboard') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current" />
+                    </a>
+                @else
+                    <a href="{{ route('penghuniDash') }}">
+                        <x-application-logo class="block h-9 w-auto fill-current" />
+                    </a>
+                @endif
+            </div>
+            <ul class="space-y-1 font-medium px-2">
+                @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
+                    <li>
+                        <a href="{{ route('dataPenghuni') }}"
+                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataPenghuni') ? 'bg-menu-hover text-side-bar-color  dark:text-side-bar-color font-bold' : '' }}">
+                            <span class="ms-3">Data Penghuni</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dataLaundry') }}"
+                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataLaundry') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
+                            <span class="ms-3">Laundry</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dataKebersihan') }}"
+                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataKebersihan') ? 'bg-menu-hover text-side-bar-color font-bold dark:text-side-bar-color   ' : '' }}">
+                            <span class="ms-3">Kebersihan</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dataBooking') }}"
+                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataBooking') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
+                            <span class="ms-3">Kelola Booking</span>
+                        </a>
+                    </li>
+                @endif
+                @if (Auth::user()->role == 'pemilik')
+                    <li>
+                        <a href="{{ route('dataKeuangan') }}"
+                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataKeuangan') ? 'bg-menu-hover text-side-bar-color font-bold dark:text-side-bar-color ' : '' }}">
+                            <span class="ms-3">Keuangan</span>
+                        </a>
+                    </li>
+                @endif
+            </ul>
         </div>
-        <ul class="space-y-1 font-medium px-2">
-            @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
-                <li>
-                    <a href="{{ route('dataPenghuni') }}"
-                        class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataPenghuni') ? 'bg-menu-hover text-side-bar-color  dark:text-side-bar-color font-bold' : '' }}">
-                        <span class="ms-3">Data Penghuni</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('dataLaundry') }}"
-                        class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataLaundry') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
-                        <span class="ms-3">Laundry</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('dataKebersihan') }}"
-                        class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataKebersihan') ? 'bg-menu-hover text-side-bar-color font-bold dark:text-side-bar-color   ' : '' }}">
-                        <span class="ms-3">Kebersihan</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ route('dataBooking') }}"
-                        class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataBooking') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
-                        <span class="ms-3">Kelola Booking</span>
-                    </a>
-                </li>
-            @endif
-            @if (Auth::user()->role == 'pemilik')
-                <li>
-                    <a href="{{ route('dataKeuangan') }}"
-                        class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataKeuangan') ? 'bg-menu-hover text-side-bar-color font-bold dark:text-side-bar-color ' : '' }}">
-                        <span class="ms-3">Keuangan</span>
-                    </a>
-                </li>
-            @endif
-        </ul>
+        <div class="p-2 flex justify-center">
+            <a href="{{ route('logout') }}"
+                class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color hover:font-bold dark:hover:bg-menu-hover group"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                <span class="ms-3">Logout</span>
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+        </div>
     </div>
 </aside>
 <button id="toggleSidebarButton"
-    class="md:hidden absolute top-4 right-4 bg-gray-800 text-white p-2 rounded-md focus:outline-none">
-    <i class="fa-solid fa-bars"></i>
+    class="md:hidden absolute top-4 right-4 z-50 text-white p-2 rounded-md focus:outline-none">
+    <i class="fa-solid fa-bars fa-xl"></i>
 </button>
 
 
@@ -130,6 +149,6 @@
     const toggleSidebarButton = document.getElementById("toggleSidebarButton");
 
     toggleSidebarButton.addEventListener("click", () => {
-        sidebar.classList.toggle("-translate-x-full"); // Mengaktifkan/menonaktifkan transisi sidebar
+        sidebar.classList.toggle("left-0"); // Mengaktifkan/menonaktifkan transisi sidebar
     });
 </script>
