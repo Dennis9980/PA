@@ -1,11 +1,11 @@
-<div id="detail-modal{{ $penghuni->id }}" tabindex="-1" aria-hidden="true" 
+<div id="detail-modal{{ $penghuni->id }}" tabindex="-1" aria-hidden="true"
     class="hidden backdrop-blur-sm overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full">
     <div class="relative w-max max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white px-2 pb-4 rounded-lg shadow  dark:bg-gray-700">
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                
+
                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                     Detail Penghuni
                 </h3>
@@ -49,6 +49,28 @@
                             <div class="flex-1 min-w-0 ms-4">
                                 <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
                                     Kamar
+                                    {{-- @if (isset($pengghuni->penghuni->kamarKos)) --}}
+                                    @switch($penghuni->penghuni->kamarKos->tipe ?? 'Belum di set')
+                                        
+                                        @case('tipe_a')
+                                            ( Tipe A )
+                                        @break
+
+                                        @case('tipe_b')
+                                           ( Tipe B )
+                                        @break
+
+                                        @case('tipe_aac')
+                                            ( Tipe A (AC) )
+                                        @break
+
+                                        @case('tipe_bac')
+                                            ( Tipe B (AC) )
+                                        @break
+
+                                        
+                                    @endswitch
+                                    {{-- @endif --}}
                                 </p>
                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                                     {{ $penghuni->penghuni->kamarKos->nomor_kamar ?? 'Belum di atur' }}

@@ -114,14 +114,7 @@
                         </a>
                     </li>
                 @endif
-                @if (Auth::user()->role == 'pemilik')
-                    <li>
-                        <a href="{{ route('dataKeuangan') }}"
-                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataKeuangan') ? 'bg-menu-hover text-side-bar-color font-bold dark:text-side-bar-color ' : '' }}">
-                            <span class="ms-3">Keuangan</span>
-                        </a>
-                    </li>
-                @endif
+                
             </ul>
         </div>
         <div class="p-2 flex justify-center">

@@ -42,7 +42,7 @@
                 {{ $slot }}
             </main>
             @else
-                <main class="p-4 ">
+                <main class="p-4 px-40">
                     {{ $slot }}
                 </main>
         @endif
