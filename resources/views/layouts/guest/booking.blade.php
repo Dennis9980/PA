@@ -36,10 +36,25 @@
                     <select id="countries"
                         class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="Pilih Tipe">Pilih Tipe</option>
-                        <option value="Tipe A">Tipe A</option>
-                        <option value="Tipe B">Tipe B</option>
-                        <option value="Tipe A (AC)">Tipe A (AC)</option>
-                        <option value="Tipe B (AC)">Tipe B (AC)</option>
+                        @foreach ($tipeKamarKosong as $tipe)
+                            @switch($tipe)
+                                @case('tipe_a')
+                                    <option value="Tipe A">Tipe A</option>
+                                @break
+
+                                @case('tipe_b')
+                                    <option value="Tipe B">Tipe B</option>
+                                @break
+
+                                @case('tipe_aac')
+                                    <option value="Tipe A (AC)">Tipe A (AC)</option>
+                                @break
+
+                                @case('tipe_bac')
+                                    <option value="Tipe B (AC)">Tipe B (AC)</option>
+                                @break
+                            @endswitch
+                        @endforeach
                     </select>
                     <p class="p-2">Harga per tahun: <span id="hargaKamar" class="hargaKamar"></span></p>
                     <div class="flex justify-center">
@@ -199,10 +214,25 @@
                 <select id="countries"
                     class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="Pilih Tipe">Pilih Tipe</option>
-                    <option value="Tipe A">Tipe A</option>
-                    <option value="Tipe B">Tipe B</option>
-                    <option value="Tipe A (AC)">Tipe A (AC)</option>
-                    <option value="Tipe B (AC)">Tipe B (AC)</option>
+                    @foreach ($tipeKamarKosong as $tipe)
+                        @switch($tipe)
+                            @case('tipe_a')
+                                <option value="Tipe A">Tipe A</option>
+                            @break
+
+                            @case('tipe_b')
+                                <option value="Tipe B">Tipe B</option>
+                            @break
+
+                            @case('tipe_aac')
+                                <option value="Tipe A (AC)">Tipe A (AC)</option>
+                            @break
+
+                            @case('tipe_bac')
+                                <option value="Tipe B (AC)">Tipe B (AC)</option>
+                            @break
+                        @endswitch
+                    @endforeach
                 </select>
                 <p class="p-2">Harga per tahun: <span id="hargaKamar" class="hargaKamar"></span></p>
                 <div class="flex justify-center">
@@ -256,7 +286,8 @@
 
 
     @if (isset($dataBooking) && isset($snapToken))
-        <div id="bookingModal" class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm text-black">
+        <div id="bookingModal"
+            class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm text-black">
             <div class="bg-white p-8 rounded-md">
                 <h2 class="text-2xl font-semibold mb-4 text-center ">Konfirmasi Booking</h2>
 

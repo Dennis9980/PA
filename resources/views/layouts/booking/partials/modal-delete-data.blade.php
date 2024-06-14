@@ -14,7 +14,7 @@
                         menghapus data ini?</h3>
                     <div class="flex flex-row justify-center">
 
-                        <form action="{{ route('deleteBooking', $booking->id) }}" method="POST">
+                        <form action="{{ route('deleteKelolaBooking', $booking->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit"

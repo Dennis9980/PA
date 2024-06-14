@@ -10,7 +10,7 @@ class KamarKos extends Model
 {
     use HasFactory, HasUuids;
 
-    protected $fillable = ['nomor_kamar'];
+    protected $fillable = ['nomor_kamar', 'tipe'];
 
     public function penghuni()
     {

@@ -60,7 +60,7 @@ Route::middleware(['auth', 'gabungan'])->group(function () {
 
     // Route untuk data booking
     Route::get('data-booking', [KelolaBooking::class, 'index'])->name('dataBooking');
-    Route::get('data-booking/delete', [KelolaBooking::class, 'destoy'])->name('deleteBooking');
+    Route::delete('data-booking/delete/{id}', [KelolaBooking::class, 'destroy'])->name('deleteKelolaBooking');
 });
 
 // Middleware untuk pemilik
