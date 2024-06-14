@@ -1,4 +1,4 @@
-<div id="static-modal{{ $penghuni->id }}" tabindex="-1" aria-hidden="true" 
+<div id="static-modal{{ $penghuni->id }}" tabindex="-1" aria-hidden="true"
     class="hidden backdrop-blur-sm overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-full">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
@@ -43,15 +43,55 @@
                         @enderror
                     </div>
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="kos"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Kamar</label>
-                        <select  id="kos" name="id_kamar_kos"
+                        <label for="kos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih
+                            Kamar</label>
+                        <select id="kos" name="id_kamar_kos"
                             class="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                           
-                            <option selected>Kamar {{ $penghuni->penghuni->kamarKos->nomor_kamar ?? 'Pilih Kamar' }}</option>
+
+                            <option selected>
+                                {{-- @if (isset($pengghuni->penghuni->kamarKos)) --}}
+                                    Kamar {{ $penghuni->penghuni->kamarKos->nomor_kamar ?? 'Pilih' }}
+                                    @switch($penghuni->penghuni->kamarKos->tipe ?? 'belum di set')
+                                        @case('tipe_a')
+                                            Tipe A
+                                        @break
+
+                                        @case('tipe_b')
+                                            Tipe B
+                                        @break
+
+                                        @case('tipe_aac')
+                                            Tipe A (AC)
+                                        @break
+
+                                        @case('tipe_bac')
+                                            Tipe B (AC)
+                                        @break
+                                    @endswitch
+                                {{-- @else
+                                    Pilih Kamar --}}
+                                {{-- @endif --}}
+                            </option>
                             @foreach ($dataKos as $data)
                                 <option class="m-4 capitalize text-md" value="{{ $data->id }}">
                                     Kamar {{ $data->nomor_kamar }}
+                                    @switch($data->tipe)
+                                        @case('tipe_a')
+                                            Tipe A
+                                        @break
+
+                                        @case('tipe_b')
+                                            Tipe B
+                                        @break
+
+                                        @case('tipe_aac')
+                                            Tipe A (AC)
+                                        @break
+
+                                        @case('tipe_bac')
+                                            Tipe B (AC)
+                                        @break
+                                    @endswitch
                                 </option>
                             @endforeach
                         </select>
@@ -69,7 +109,8 @@
                         </label>
                         <input type="text" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                            placeholder="Tulis No Telepon" name="phone" value="{{ $penghuni->penghuni->phone ?? 'belum di atur' }}">
+                            placeholder="Tulis No Telepon" name="phone"
+                            value="{{ $penghuni->penghuni->phone ?? 'belum di atur' }}">
                     </div>
                     <div class="col-span-2">
                         <label for="name"

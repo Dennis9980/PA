@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use \Midtrans;
 use Carbon\Carbon;
 use App\Models\Booking;
+use App\Models\KamarKos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -12,8 +13,21 @@ class BookingController extends Controller
 {
     public function index()
     {
-        return view('layouts.guest.booking');
+        // Ambil semua tipe kamar yang unik dari database
+        $allTipeKamar = KamarKos::select('tipe')->distinct()->pluck('tipe');
+
+        // Ambil tipe kamar yang MASIH memiliki kamar kosong
+        $tipeKamarKosong = KamarKos::select('tipe')
+            ->whereDoesntHave('penghuni') // Kamar yang tidak memiliki penghuni
+            ->groupBy('tipe')
+            ->get() // Mengambil semua tipe kamar yang memiliki setidaknya satu kamar kosong
+            ->pluck('tipe');
+
+        // dd($tipeKamarKosong);
+
+        return view('layouts.guest.booking', compact('tipeKamarKosong', 'allTipeKamar'));
     }
+
     public function invoice($id)
     {
         $data = Booking::findOrFail($id);
@@ -23,6 +37,14 @@ class BookingController extends Controller
 
     public function checkout(Request $request)
     {
+        $allTipeKamar = KamarKos::select('tipe')->distinct()->pluck('tipe');
+
+        // Ambil tipe kamar yang MASIH memiliki kamar kosong
+        $tipeKamarKosong = KamarKos::select('tipe')
+            ->whereDoesntHave('penghuni') // Kamar yang tidak memiliki penghuni
+            ->groupBy('tipe')
+            ->get() // Mengambil semua tipe kamar yang memiliki setidaknya satu kamar kosong
+            ->pluck('tipe');
         // dd($request->all());
         $request->validate([
             'nama_lengkap' => 'required|string',
@@ -78,7 +100,7 @@ class BookingController extends Controller
         }
 
         // Tampilkan modal dengan detail booking
-        return view('layouts.guest.booking', compact('dataBooking', 'snapToken'))->with('success', 'Booking berhasil dibuat!');
+        return view('layouts.guest.booking', compact('dataBooking', 'snapToken', 'tipeKamarKosong'))->with('success', 'Booking berhasil dibuat!');
     }
 
     public function checkoutView(Request $request, $bookingId)
@@ -145,7 +167,8 @@ class BookingController extends Controller
         return response()->json(['message' => 'Notification received'], 200);
     }
 
-    public function deleteBooking($id){
+    public function deleteBooking($id)
+    {
         Booking::findOrFail($id)->delete();
         return redirect()->route('bookingGuest')->with('success', 'berhasil hapus data');
     }

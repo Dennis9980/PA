@@ -101,7 +101,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="6" class="text-center py-4 font-bold text-lg">Data Kosong</td>
+                                    <td colspan="9" class="text-center py-4 font-bold text-lg">Data Kosong</td>
                                 </tr>
                             @endif
                         </tbody>
