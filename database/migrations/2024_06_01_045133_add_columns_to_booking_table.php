@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('booking', function (Blueprint $table) {
             $table->bigInteger('total_harga')->after('tanggal_mulai');
-            $table->enum('status', ['Unpaid', 'Paid'])->after('total_harga');
+            $table->enum('status', ['pending', 'berhasil', 'gagal'])->after('total_harga');
         });
     }
 

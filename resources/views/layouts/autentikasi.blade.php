@@ -43,7 +43,7 @@
                     <!-- Email Address -->  
                     <div>
                         <x-input-label for="username" :value="__('Username')" />
-                        <x-text-input id="username" class="block mt-1 w-full dark:text-black" type="text" name="username" :value="old('username')" required
+                        <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required
                             autofocus autocomplete="username" />
                         <x-input-error :messages="$errors->get('username')" class="mt-2" />
                     </div>
@@ -53,7 +53,7 @@
                         <x-input-label for="password" :value="__('Password')" />
             
                         <div class="relative">
-                            <x-text-input id="password" class="block mt-1 w-full dark:text-black" type="password" name="password" required
+                            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
                                 autocomplete="current-password" />
                             <span id="togglePassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
                                 <i id="eye" class="fa-regular fa-eye"></i>
@@ -79,7 +79,7 @@
                         </x-primary-button>
             
                         @if (Route::has('password.request'))
-                            <a class="underline text-sm text-black hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                            <a class="underline text-sm text-black hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 href="{{ route('password.request') }}">
                                 {{ __('Forgot your password?') }}
                             </a>

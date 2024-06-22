@@ -39,7 +39,6 @@ class KebersihanController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $validator = Validator::make($request->all(), [
             'penghuni' => ['required'],
             'dana' => ['required'],
@@ -58,6 +57,8 @@ class KebersihanController extends Controller
             'dana_kebersihan' => $request->dana,
             'keterangan' => $request->keterangan,
             'tanggal_kebersihan' => $request->tanggal_kebersihan,
+            'status_kebersihan' => 'belum',
+            'status_dana' => 'belum'
         ]);
 
         return back()->with('success', 'Berhasil menambahkan data');
@@ -89,6 +90,7 @@ class KebersihanController extends Controller
             'dana' => ['required'],
             'keterangan' => ['required'],
             'tanggal_kebersihan' => ['required'],
+            'status_kebersihan' => ['required']
         ]);
 
         if ($validator->fails()) {
@@ -103,6 +105,7 @@ class KebersihanController extends Controller
             'dana_kebersihan' => $request->dana,
             'keterangan' => $request->keterangan,
             'tanggal_kebersihan' => $request->tanggal_kebersihan,
+            'status_dana' => $request->status_dana,
         ]);
 
         return back()->with('success', 'Berhasil update data');

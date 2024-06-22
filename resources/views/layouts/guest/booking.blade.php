@@ -34,7 +34,7 @@
 
                     <label for="countries" class="block mb-2 text-sm font-medium pt-5">Pilih tipe</label>
                     <select id="countries"
-                        class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
                         <option value="Pilih Tipe">Pilih Tipe</option>
                         @foreach ($tipeKamarKosong as $tipe)
                             @switch($tipe)
@@ -73,9 +73,10 @@
                             <input type="hidden" id="selectedTipeInput" name="modalTipeKamarInput" value="">
                             <input type="hidden" id="selectedHargaInput" name="modalHargaInput" value="">
                             <input type="hidden" id="dpInput" name="modalDpInput" value="2000000">
+                            <input type="text" name="jenis_transaksi" value="">
 
                             <label for="namaLengkap" class="block mb-2 text-sm font-medium">Nama Lengkap</label>
-                            <input type="text" name="nama_lengkap" id="nama_lengkap"
+                            <input type="text" name="nama_pembayar" id="nama_lengkap"
                                 class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
                                 placeholder="Nama Lengkap" required="">
 
@@ -212,7 +213,7 @@
 
                 <label for="countries" class="block mb-2 text-xl text-center font-bold pt-5">Booking Sekarang</label>
                 <select id="countries"
-                    class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
                     <option value="Pilih Tipe">Pilih Tipe</option>
                     @foreach ($tipeKamarKosong as $tipe)
                         @switch($tipe)
@@ -251,9 +252,9 @@
                         <input type="hidden" id="tipeKamarInput" name="modalTipeKamarInput" value="">
                         <input type="hidden" id="hargaInput" name="modalHargaInput" value="">
                         <input type="hidden" id="dpInput" name="modalDpInput" value="2000000">
-
+                        <input type="hidden" name="jenis_transaksi" value="booking">
                         <label for="namaLengkap" class="block mb-2 text-sm font-medium">Nama Lengkap</label>
-                        <input type="text" name="nama_lengkap" id="nama_lengkap"
+                        <input type="text" name="nama_pembayar" id="nama_lengkap"
                             class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
                             placeholder="Nama Lengkap" required="">
 
@@ -285,7 +286,7 @@
     </div>
 
 
-    @if (isset($dataBooking) && isset($snapToken))
+    @if (isset($transaksi) && isset($snapToken))
         <div id="bookingModal"
             class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm text-black">
             <div class="bg-white p-8 rounded-md">
@@ -295,44 +296,44 @@
                     <tr>
                         <td>Nama</td>
                         <td class="px-2">:</td>
-                        <td>{{ $dataBooking->nama }}</td>
+                        <td>{{ $transaksi->nama_pembayar }}</td>
                     </tr>
                     <tr>
                         <td>No. Telepon</td>
                         <td class="px-2">:</td>
-                        <td>{{ $dataBooking->phone }}</td>
+                        <td>{{ $transaksi->no_telpon }}</td>
                     </tr>
                     <tr>
                         <td>Email</td>
                         <td class="px-2">:</td>
-                        <td>{{ $dataBooking->email }}</td>
+                        <td>{{ $transaksi->email }}</td>
                     </tr>
                     <tr>
                         <td>Tipe Kamar</td>
                         <td class="px-2">:</td>
-                        <td>{{ $dataBooking->tipe_kos }}</td>
+                        <td>{{ $transaksi->tipe_kos }}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Mulai</td>
                         <td class="px-2">:</td>
-                        <td>{{ $dataBooking->tanggal_mulai }}</td>
+                        <td>{{ $transaksi->tgl_masuk }}</td>
                     </tr>
                     <tr>
                         <td>Uang Muka</td>
                         <td class="px-2">:</td>
-                        <td>{{ $dataBooking->Dp }}</td>
+                        <td>{{ $transaksi->dp }}</td>
                     </tr>
                     <tr>
                         <td>Total Harga</td>
                         <td class="px-2">:</td>
-                        <td>{{ $dataBooking->total_harga }}</td>
+                        <td>{{ $transaksi->total_harga }}</td>
                     </tr>
                 </table>
 
                 <div class="flex flex-row justify-center gap-4 mt-4">
                     <button id="pay-button" type="submit"
                         class="px-4 py-2 bg-green-500 text-white rounded">Bayar</button>
-                    <form action="{{ route('deleteBooking', $dataBooking->id) }}" method="POST">
+                    <form action="{{ route('deleteBooking', $transaksi->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded ">Batal

@@ -24,7 +24,7 @@
                 </a>
                 @if (Route::has('login'))
                     @auth
-                        @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
+                        @if (Auth::user()->role == 'admin')
                             <a href="{{ route('dashboard') }}"
                                 class="flex items-center p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
                                 Dashboard
@@ -58,7 +58,7 @@
             </a>
             @if (Route::has('login'))
                 @auth
-                    @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
+                    @if (Auth::user()->role == 'admin')
                         <a href="{{ route('dashboard') }}"
                             class="flex items-center ml-4 p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
                             Dashboard

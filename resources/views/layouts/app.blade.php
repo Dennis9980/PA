@@ -20,8 +20,8 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        @if (Auth::user()->role == 'pemilik')
+    <div class="min-h-screen bg-gray-100">
+        @if (Auth::user()->role == 'admin')
             @include('layouts.navigation')
         @else
             @include('layouts.navigation-customer')
@@ -29,7 +29,7 @@
 
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-white dark:bg-gray-800 shadow">
+            <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
@@ -37,14 +37,14 @@
         @endif
 
         <!-- Page Content -->
-        @if (Auth::user()->role == 'pemilik')
+        @if (Auth::user()->role == 'admin')
             <main class="p-4 lg:pt-20 sm:ml-64">
                 {{ $slot }}
             </main>
-            @else
-                <main class="p-4 px-40">
-                    {{ $slot }}
-                </main>
+        @else
+            <main class="p-4 lg:px-40">
+                {{ $slot }}
+            </main>
         @endif
     </div>
 </body>

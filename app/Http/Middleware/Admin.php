@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Gabungan
+class Admin
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class Gabungan
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user()->role != 'pemilik' && Auth::user()->role != 'pengurus'){
+        if(Auth::user()->role != 'admin'){
             abort(Response::HTTP_FORBIDDEN, 'Kamu tidak memiliki akses di halaman ini');
         }
         return $next($request);

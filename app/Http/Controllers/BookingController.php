@@ -66,7 +66,7 @@ class BookingController extends Controller
             'email' => $request->email,
             'tanggal_mulai' => $formattedTglMasuk,
             'total_harga' => $request->modalHargaInput,
-            'status' => 'Unpaid',
+            'status' => 'pending',
             'tipe_kos' => $request->modalTipeKamarInput,
             'Dp' => $request->modalDpInput,
         ]);
@@ -151,7 +151,7 @@ class BookingController extends Controller
                 $booking = Booking::where('id', $request->order_id)->first();
                 // Pastikan transaksi berhasil sebelum update status
                 if ($request->transaction_status == 'settlement' || $request->transaction_status == 'capture') { // Contoh status sukses
-                    $booking->update(['status' => 'Paid']);
+                    $booking->update(['status' => 'berhasil']);
                 } else {
                     Log::warning("Midtrans callback: Transaction not successful", ['data' => $request->all()]);
                 }

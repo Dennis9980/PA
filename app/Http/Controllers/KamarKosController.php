@@ -13,7 +13,7 @@ class KamarKosController extends Controller
     public function index()
     {
         $data = KamarKos::doesntHave('penghuni')->get(); 
-        return view('pemilik.home', compact('data'));
+        return view('admin.home', compact('data'));
     }
 
     /**
