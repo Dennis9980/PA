@@ -13,11 +13,16 @@ class KamarKosSeeder extends Seeder
      */
     public function run(): void
     {
-    
-        // Buat 20 KamarKos
-        for ($i = 1; $i <= 20; $i++) {
+
+
+        $tipeKamar = ['tipe_a', 'tipe_b', 'tipe_aac', 'tipe_bac']; // Array tipe kamar
+        $jumlahKamar = 6; // Jumlah kamar yang ingin dibuat
+
+        // Buat kamar-kamar
+        for ($i = 1; $i <= $jumlahKamar; $i++) {
             KamarKos::create([
-                'nomor_kamar' => str_pad($i, 2, '0', STR_PAD_LEFT), // Menambahkan '0' di depan jika nomor kamar < 10
+                'nomor_kamar' => str_pad($i, 2, '0', STR_PAD_LEFT),
+                'tipe' => $tipeKamar[($i - 1) % count($tipeKamar)] // Ambil tipe secara berulang
             ]);
         }
     }
