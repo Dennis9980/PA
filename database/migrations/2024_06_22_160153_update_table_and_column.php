@@ -12,14 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('kamar_kos', function (Blueprint $table) {
-            $table->enum('status_kebersihan', ['tipe_a', 'tipe_b', 'tipe_aac', 'tipe_bac']);
+            $table->enum('tipe', ['tipe_a', 'tipe_b', 'tipe_aac', 'tipe_bac'])->after('nomor_kamar');
         });
         Schema::table('detail_penghuni', function (Blueprint $table) {
             $table->dropColumn('status_pembayaran');
-            $table->bigInteger('terbayar')->default(0);
-            $table->bigInteger('saldo_laundry')->default(0);
-            $table->bigInteger('dana_kebersihan')->default(0);
-            $table->enum('status_kebersihan', ['tipe_a', 'tipe_b', 'tipe_aac', 'tipe_bac']);
+            $table->bigInteger('terbayar')->default(0)->after('phone');
+            $table->bigInteger('saldo_laundry')->default(0)->after('terbayar');
+            $table->bigInteger('dana_kebersihan')->default(0)->after('saldo_laundry');
         });
     }
 
