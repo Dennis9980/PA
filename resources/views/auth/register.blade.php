@@ -45,7 +45,7 @@
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
-        <input type="text" class="hidden" name="role" value="pemilik">
+        <input type="text" class="hidden" name="role" value="admin">
         <input type="text" class="hidden" name="phone">
         <input type="text" class="hidden" name="address">
 

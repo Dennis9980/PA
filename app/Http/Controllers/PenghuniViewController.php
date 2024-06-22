@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Laundry;
+use App\Models\Transaction;
 
 class PenghuniViewController extends Controller
 {
@@ -25,7 +26,7 @@ class PenghuniViewController extends Controller
         $tahunIni = Carbon::now()->year;
 
         // Query untuk jadwal kebersihan terdekat yang belum selesai
-        $jadwalKebersihan = Kebersihan::where('status', 'belum')
+        $jadwalKebersihan = Kebersihan::where('status_kebersihan', 'belum')
             ->orderByRaw('ABS(DATEDIFF(tanggal_kebersihan, ?))', [$hariIni]) // Urutkan berdasarkan selisih hari terdekat
             ->first(); // Ambil hanya satu hasil (jadwal terdekat)
 
@@ -34,30 +35,7 @@ class PenghuniViewController extends Controller
             $jadwalKebersihan->tanggal_kebersihan = Carbon::parse($jadwalKebersihan->tanggal_kebersihan)->locale('id')->format('d F Y');
         }
 
-        // ... (kode untuk $dataKebersihan tetap sama)
-        // $dataKebersihan = Kebersihan::select(
-        //     DB::raw("DATE_FORMAT(created_at, '%Y-%m') as bulan"),
-        //     DB::raw('SUM(dana_kebersihan) as total_dana')
-        // )
-        //     ->groupBy('bulan')
-        //     ->get();
 
-        // foreach ($dataKebersihan as $item) {
-        //     $item->bulan = Carbon::createFromFormat('Y-m', $item->bulan)->locale('id')->format('F Y');
-        // }
-        $dataKebersihan = Kebersihan::select(
-            DB::raw("DATE_FORMAT(created_at, '%Y-%m') as bulan"),
-            DB::raw('SUM(dana_kebersihan) as total_dana')
-        )
-            ->whereMonth('created_at', $bulanIni)
-            ->whereYear('created_at', $tahunIni)
-            ->groupBy('bulan')
-            ->get();
-
-        foreach ($dataKebersihan as $item) {
-            $item->bulan = Carbon::createFromFormat('Y-m', $item->bulan)->locale('id')->format('F');
-        }
-
-        return view('penghuni.home', compact('data', 'dataKebersihan', 'jadwalKebersihan', 'dataLaundry'));
+        return view('penghuni.home', compact('data', 'jadwalKebersihan', 'dataLaundry'));
     }
 }

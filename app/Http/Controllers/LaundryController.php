@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Laundry;
+use App\Models\Penghuni;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -54,15 +55,20 @@ class LaundryController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $pelanggan = User::where('name', $request->penghuni)->first();
+        $penghuni = User::where('name', $request->penghuni)->first();
 
         Laundry::create([
-            'id_penghuni' => $pelanggan->id,
+            'id_penghuni' => $penghuni->id,
             'berat' => $request->berat,
             'total_harga' => $request->harga,
             'tanggal_masuk' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai
         ]);
+        
+        $updateSaldo = Penghuni::where('id_user', $penghuni->id)->first();
+        $updateSaldo->saldo_laundry -= $request->harga;
+        $updateSaldo->save();
+
 
         return back()->with('success', 'Berhasil menambahkan data');
     }
