@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\DetailPenghuniObserver;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,9 +12,10 @@ class Penghuni extends Model
     use HasFactory, HasUuids;
 
     protected $table = 'detail_penghuni';
+    protected $observers = [DetailPenghuniObserver::class]; // Observer terdaftar
 
     protected $fillable = [
-        'id_user', 'id_kamar_kos', 'tanggal_mulai', 'tanggal_selesai', 'status_pembayaran', 'phone', 'address'
+        'id_user', 'id_kamar_kos', 'tanggal_mulai', 'tanggal_selesai', 'phone', 'address', 'terbayar', 'saldo_laundry', 'dana_kebersihan'
     ];
 
     protected function casts(): array

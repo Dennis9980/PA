@@ -2,9 +2,11 @@
 
 namespace App\Observers;
 
+use Carbon\Carbon;
 use App\Models\Kos;
 use App\Models\Penghuni;
 use Illuminate\Validation\ValidationException;
+
 
 class DetailPenghuniObserver
 {
@@ -13,7 +15,6 @@ class DetailPenghuniObserver
      */
     public function creating(Penghuni $detailPenghuni)
     {
-
         
     }
 
@@ -30,10 +31,6 @@ class DetailPenghuniObserver
      */
     public function deleted(Penghuni $penghuni): void
     {
-        $kos = $penghuni->kos; // Ambil model Kos yang terkait dengan Penghuni
-        if ($kos) {
-            $kos->increment('jmlh_kamar'); // Tambahkan jumlah kamar yang tersisa
-        }
     }
 
     /**

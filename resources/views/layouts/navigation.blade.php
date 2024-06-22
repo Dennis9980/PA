@@ -22,7 +22,11 @@
                     </h2>
                 @elseif (request()->routeIs('dataBooking'))
                     <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
-                        {{ __('Kelola Booking') }}
+                        {{ __('Data Booking') }}
+                    </h2>
+                @elseif (request()->routeIs('dataTransaksi'))
+                    <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
+                        {{ __('Data Transaksi') }}
                     </h2>
                 @elseif (request()->routeIs('profile.edit'))
                     <h2 class="font-semibold text-xl text-white dark:text-gray-200 leading-tight">
@@ -38,7 +42,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm text-white leading-4 font-medium rounded-md dark:text-white hover:text-menu-hover dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm text-white leading-4 font-medium rounded-md  hover:text-menu-hover dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +81,7 @@
     <div class="flex flex-col justify-between h-full">
         <div>
             <div class="shrink-0 flex justify-center items-center py-10 rounded-full ">
-                @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
+                @if (Auth::user()->role == 'admin')
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="block h-9 w-auto fill-current" />
                     </a>
@@ -88,29 +92,35 @@
                 @endif
             </div>
             <ul class="space-y-1 font-medium px-2">
-                @if (Auth::user()->role == 'pemilik' || Auth::user()->role == 'pengurus')
+                @if (Auth::user()->role == 'admin')
                     <li>
                         <a href="{{ route('dataPenghuni') }}"
-                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataPenghuni') ? 'bg-menu-hover text-side-bar-color  dark:text-side-bar-color font-bold' : '' }}">
+                            class="flex items-center p-2 rounded-md  hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataPenghuni') ? 'bg-menu-hover text-side-bar-color  dark:text-side-bar-color font-bold' : '' }}">
                             <span class="ms-3">Data Penghuni</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('dataLaundry') }}"
-                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataLaundry') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
+                            class="flex items-center p-2 rounded-md  hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataLaundry') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
                             <span class="ms-3">Laundry</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('dataKebersihan') }}"
-                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataKebersihan') ? 'bg-menu-hover text-side-bar-color font-bold dark:text-side-bar-color   ' : '' }}">
+                            class="flex items-center p-2 rounded-md  hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataKebersihan') ? 'bg-menu-hover text-side-bar-color font-bold dark:text-side-bar-color   ' : '' }}">
                             <span class="ms-3">Kebersihan</span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('dataBooking') }}"
-                            class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataBooking') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
-                            <span class="ms-3">Kelola Booking</span>
+                            class="flex items-center p-2 rounded-md  hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataBooking') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
+                            <span class="ms-3">Data Booking</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('dataTransaksi') }}"
+                            class="flex items-center p-2 rounded-md  hover:bg-menu-hover hover:text-side-bar-color   hover:font-bold dark:hover:bg-menu-hover group {{ request()->routeIs('dataTransaksi') ? 'bg-menu-hover text-side-bar-color  font-bold dark:text-side-bar-color  ' : '' }}">
+                            <span class="ms-3">Data Transaksi</span>
                         </a>
                     </li>
                 @endif
@@ -119,7 +129,7 @@
         </div>
         <div class="p-2 flex justify-center">
             <a href="{{ route('logout') }}"
-                class="flex items-center p-2 rounded-md dark:text-white hover:bg-menu-hover hover:text-side-bar-color hover:font-bold dark:hover:bg-menu-hover group"
+                class="flex items-center p-2 rounded-md  hover:bg-menu-hover hover:text-side-bar-color hover:font-bold dark:hover:bg-menu-hover group"
                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <i class="fa-solid fa-right-from-bracket me-2"></i>
                 <span class="ms-3">Logout</span>

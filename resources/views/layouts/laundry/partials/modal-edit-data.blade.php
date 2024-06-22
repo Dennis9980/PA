@@ -1,16 +1,16 @@
 <section>
     <div id="edit-modal{{ $laundry->id }}" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 bg-opacity-50 bg-black justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        class="hidden overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 backdrop-blur-sm justify-center items-center w-full md:inset-0 h-full max-h-full">
         <div class="relative w-full max-w-md max-h-full">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow px-4 pb-4 dark:bg-gray-700">
+            <div class="relative bg-white rounded-lg shadow px-4 pb-4  ">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t  ">
+                    <h3 class="text-lg font-semibold text-gray-900 ">
                         Edit Data Laundry
                     </h3>
                     <button type="button"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  "
                         data-modal-hide="edit-modal{{ $laundry->id }}">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                             fill="none" viewBox="0 0 14 14">
@@ -21,46 +21,46 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form action="{{ route('updateLaundry', $laundry->id) }}" method="POST" class="p-4 md:p-5">
+                <form action="{{ route('updateLaundry', $laundry->id) }}" method="POST" class="p-2">
                     @csrf
                     @method('PUT')
                     <div class="grid gap-4 mb-4 grid-cols-2">
                         <div class="col-span-1 sm:col-span-2">
-                            <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                            <input type="text" name="penghuni" id="price"
-                                class="bg-gray-50 border capitalize border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="" value="{{ $laundry->user->name }}" readonly>
+                            <label for="namaPenghuni"
+                                class="block mb-2 text-sm font-medium text-gray-900 ">Nama</label>
+                            <input type="text" name="penghuni" id="namaPenghuni"
+                                class="bg-gray-50  text-sm cursor-not-allowed rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
+                                placeholder="Nama Penghuni" required="" value="{{ $laundry->user->name }}" readonly>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label for="berat"
+                                class="block mb-2 text-sm font-medium text-gray-900 ">Berat</label>
+                            <input type="number" name="berat" id="berat"
+                                class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
+                                placeholder="Berat" required="" value="{{ $laundry->berat }}">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
                             <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Berat</label>
-                            <input type="number" name="berat" id="price"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="" value="{{ $laundry->berat }}">
-                        </div>
-                        <div class="col-span-2 sm:col-span-1">
-                            <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 ">Total Harga</label>
                             <input type="number" name="harga" id="price"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="" value="{{ $laundry->total_harga }}">
+                                class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
+                                placeholder="Total Harga" required="" value="{{ $laundry->total_harga }}">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                            <label for="tanggalMasuk"
+                                class="block mb-2 text-sm font-medium text-gray-900 ">Tanggal
                                 Masuk</label>
-                            <input type="date" name="tanggal_mulai" id="price"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="" value="{{ $laundry->tanggal_masuk }}">
+                            <input type="date" name="tanggal_mulai" id="tanggalMasuk"
+                                class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
+                                 required="" value="{{ $laundry->tanggal_masuk }}">
                         </div>
                         <div class="col-span-2 sm:col-span-1">
-                            <label for="price"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal
+                            <label for="tanggalSelesai"
+                                class="block mb-2 text-sm font-medium text-gray-900 ">Tanggal
                                 Selesai</label>
-                            <input type="date" name="tanggal_selesai" id="price"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="$2999" required="" value="{{ $laundry->tanggal_selesai }}">
+                            <input type="date" name="tanggal_selesai" id="tanggalSelesai"
+                                class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
+                                 required="" value="{{ $laundry->tanggal_selesai }}">
                         </div>
                     </div>
                     <button type="submit"

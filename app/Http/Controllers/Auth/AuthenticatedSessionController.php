@@ -28,11 +28,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        if($request->user()->role === 'pemilik'){
+        if($request->user()->role === 'admin'){
             return redirect('dashboard');
-        }elseif ($request->user()->role === 'pengurus') {
-            return redirect('pengurus-home');
-        }elseif($request->user()->role === 'penghuni'){
+        }else{
             return redirect('penghuni-home');
         }
 

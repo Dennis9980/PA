@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\KamarKos;
 use App\Models\Penghuni;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +19,7 @@ class PenghuniController extends Controller
     public function index(Request $request)
     {
         $search = request('search');
-        $dataKos = KamarKos::doesntHave('penghuni')->get(); 
+        $dataKos = KamarKos::doesntHave('penghuni')->get();
 
 
         $data = User::filter(['role' => 'penghuni', $search])
@@ -30,51 +31,51 @@ class PenghuniController extends Controller
 
     public function edit(Request $request, $id)
     {
+        $user = User::findOrFail($id);
+
+        // Validasi unique email dan username dengan mengecualikan user yang sedang diedit
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
-            'username' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
             'phone' => ['nullable', 'string'],
+            'terbayar' => ['required', 'integer'],
             'address' => ['nullable', 'string']
         ]);
-        
+
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors())->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        
-        $user = User::findOrFail($id);
-        
-        // Update the user's properties
+
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'username' => $request->username,
         ]);
-        
-        // Update atau buat data Penghuni jika role adalah 'penghuni'
+
         if ($user->role === 'penghuni') {
-            
             $user->penghuni()->updateOrCreate(
-                ['id_user' => $id], // Kondisi pencarian
+                ['id_user' => $id],
                 [
                     'id_kamar_kos' => $request->id_kamar_kos,
                     'tanggal_mulai' => $request->tanggal_mulai,
                     'tanggal_selesai' => $request->tanggal_selesai,
+                    'terbayar' => $request->terbayar,
                     'phone' => $request->phone,
-                    'address' =>$request->address,
-                    'status_pembayaran' => 'sudah',
-                    ]
-                );
-            }
-            // dd($penghuni);
+                    'address' => $request->address,
+                ]
+            );
+        }
 
-
-        return back()->with('success');
+        return back()->with('success', 'Data pengguna berhasil diperbarui!');
     }
 
-    public function createDataDetail(Request $request, $id)
-    {
 
+    public function resetDana($id)
+    {
+        $data = User::findOrFail($id);
+        Penghuni::where('id_user', $data->id)->update(['dana_kebersihan' => 0]);
+        
 
         return back()->with('success', 'berhasil nambah detail');
     }
