@@ -6,7 +6,7 @@
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                 <h3 class="text-lg font-semibold text-gray-900 ">
-                    Tambah Dana Kebersihan
+                    Tambah Jadwal Kebersihan
                 </h3>
                 <button type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
@@ -35,13 +35,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-span-2 sm:col-span-1">
-                        <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Total Dana</label>
-                        <input type="number" name="dana"  id="price"
-                            class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                            placeholder="Total Dana" required="">
-                    </div>
-                    <div class="col-span-2 sm:col-span-1">
+                    <div class="col-span-2">
                         <label for="price"
                             class="block mb-2 text-sm font-medium text-gray-900 ">Tanggal
                             Kebersihan</label>

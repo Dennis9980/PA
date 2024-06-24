@@ -55,7 +55,7 @@
                         <label for="passwordConf"
                             class="block mb-2 text-sm font-medium text-gray-900 ">Password
                             Confirmation</label>
-                        <input type="paddword" name="password_confirmation" id="passwordConf"
+                        <input type="password" name="password_confirmation" id="passwordConf"
                             class="bg-gray-50 text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Password Confirm" required="">
                     </div>

@@ -150,9 +150,9 @@
                     </div>
                     <div class="col-span-1">
                         <label for="terbayar" class="block mb-2 text-sm font-medium">Terbayar</label>
-                        <input type="integer" id="terbayar"
+                        <input type="number" id="terbayar"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                            placeholder="Tulis Email" name="terbayar" value="{{ $penghuni->penghuni->terbayar ?? 'Belum di set' }}">
+                            placeholder="Uang Kos Terbayar" name="terbayar" value="{{ $penghuni->penghuni->terbayar ?? 'Belum di set' }}">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name" class="block mb-2 text-sm font-medium">Tanggal

@@ -229,7 +229,7 @@
                         <td>{{ $transaksi->tanggal_pembayaran }}</td>
                     </tr>
                     <tr>
-                        <td>Tujuann Pembayaran</td>
+                        <td>Tujuan Pembayaran</td>
                         <td class="px-2">:</td>
                         <td>{{ $transaksi->tujuan_bayar }}</td>
                     </tr>
@@ -241,7 +241,7 @@
                     <form action="{{ route('deleteBooking', $transaksi->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded ">Batal Booking</button>
+                        <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded ">Batal Pembayaran</button>
                     </form>
                 </div>
             </div>
@@ -263,7 +263,7 @@
                     onSuccess: function(result) {
                         /* You may add your own implementation here */
                         var transactionId = result.order_id;
-                        window.location.href = `/invoice/${transactionId}`;
+                        window.location.href = `pembayaran/invoice/${transactionId}`;
                     },
                     onPending: function(result) {
                         /* You may add your own implementation here */
