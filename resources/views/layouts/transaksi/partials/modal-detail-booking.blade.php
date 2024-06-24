@@ -50,7 +50,7 @@
                     </div>
                     <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4">
                         <dt class="text-sm font-medium text-gray-500">Uang Muka</dt>
-                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 ">Rp. {{ number_format($data->total_harga, 0, ',', '.') }}
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 ">Rp. {{ number_format($data->dp, 0, ',', '.') }}
                         </dd>
                     </div>
                     <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4">

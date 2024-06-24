@@ -19,7 +19,7 @@
             <button type="button"
                 class="text-white bg-side-bar-color hover:bg-menu-hover hover:text-side-bar-color font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                 data-modal-toggle="crud-modal">
-                Tambah Dana
+                Tambah Jadwal
             </button>
         </div>
     </div>

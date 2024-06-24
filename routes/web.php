@@ -39,10 +39,6 @@ require __DIR__ . '/auth.php';
 // Middleware untuk pengguna gabungan
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [KamarKosController::class, 'index'])->name('dashboard');
-    // Route::get('pemilik-home', function () {
-    //     return view('pemilik.home');
-    // })->name('pemilikDash');
-    // Route untuk data penghuni
     Route::get('data-penghuni', [PenghuniController::class, 'index'])->name('dataPenghuni');
     Route::post('data-penghuni/{id}/', [PenghuniController::class, 'edit'])->name('editPenghuni');
     Route::post('data-penghuni/addDetail', [PenghuniController::class, 'createDataDetail'])->name('makeDetail');
@@ -73,7 +69,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'penghuni'])->group(function () {
     Route::get('/penghuni-home', [PenghuniViewController::class, 'index'])->name('penghuniDash');
     Route::post('/transaksi', [TransactionController::class, 'store'])->name('transaksiPembayaran');
-    Route::get('/dana/invoice/{id}', [TransactionController::class, 'invoicePenghuni'])->name('invoice.penghuni');
+    Route::get('/pembayaran/invoice/{id}', [TransactionController::class, 'invoicePenghuni'])->name('invoice.penghuni');
 });
 
 // Route untuk halaman booking dan proses checkout
