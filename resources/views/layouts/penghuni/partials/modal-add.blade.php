@@ -26,28 +26,28 @@
                     <div class="col-span-2">
                         <label for="name"
                             class="block mb-2 text-sm font-medium text-gray-900 ">Nama</label>
-                        <input type="text" name="name" id="name"
+                        <input type="text" name="name" id="name" value="{{ old('name') }}"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Tulis Nama Lengkap" required="">
                     </div>
                     <div class="col-span-2">
                         <label for="username"
                             class="block mb-2 text-sm font-medium text-gray-900 ">Username</label>
-                        <input type="text" name="username" id="username"
+                        <input type="text" name="username" id="username" value="{{ old('username') }}"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Tulis Username" required="">
                     </div>
                     <div class="col-span-2">
                         <label for="email"
                             class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
-                        <input type="text" name="email" id="email"
+                        <input type="text" name="email" id="email" value="{{ old('email') }}"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Tulis Email" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="password"
                             class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-                        <input type="password" name="password" id="password"
+                        <input type="password" name="password" id="password" value="{{ old('password') }}"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Password" required="">
                     </div>
@@ -55,7 +55,7 @@
                         <label for="passwordConf"
                             class="block mb-2 text-sm font-medium text-gray-900 ">Password
                             Confirmation</label>
-                        <input type="password" name="password_confirmation" id="passwordConf"
+                        <input type="password" name="password_confirmation" id="passwordConf" value="{{ old('password_confirmation') }}"
                             class="bg-gray-50 text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Password Confirm" required="">
                     </div>

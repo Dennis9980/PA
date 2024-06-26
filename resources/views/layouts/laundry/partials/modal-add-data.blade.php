@@ -1,7 +1,7 @@
 <section>
 
     <div id="crud-modal" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 bg-opacity-50 bg-black justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            class="hidden overflow-y-auto overflow-x-hidden fixed flex inset-0 z-50 backdrop-blur-sm justify-center items-center w-full md:inset-0 h-full max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow  ">
@@ -44,14 +44,14 @@
                                     class="block mb-2 text-sm font-medium text-gray-900 ">Berat</label>
                                 <input type="number" name="berat" id="price"
                                     class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                                    placeholder="Total Berat" required="" value="10">
+                                    placeholder="Total Berat" required="" value="">
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="price"
                                     class="block mb-2 text-sm font-medium text-gray-900 ">Harga</label>
                                 <input type="number" name="harga" id="price"
                                     class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                                    placeholder="Total harga" required="" value="200000">
+                                    placeholder="Total harga" required="" value="">
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="price"

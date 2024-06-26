@@ -155,7 +155,7 @@ class TransactionController extends Controller
             // Query untuk jadwal kebersihan terdekat yang belum selesai
             $jadwalKebersihan = Kebersihan::where('status_kebersihan', 'belum')
                 ->orderByRaw('ABS(DATEDIFF(tanggal_kebersihan, ?))', [$hariIni]) // Urutkan berdasarkan selisih hari terdekat
-                ->first(); // Ambil hanya satu hasil (jadwal terdekat)
+                ->first(); // Ambil hanya satu hasil (jadwal terdekat)  
 
             // Jika ada jadwal terdekat, format tanggalnya
             if ($jadwalKebersihan) {
@@ -185,27 +185,50 @@ class TransactionController extends Controller
         $hashed = hash("sha512", $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
 
         if ($hashed == $request->signature_key) {
-            // Signature valid
             try {
                 $transaksi = Transaction::where('id', $request->order_id)->first();
-                $pembayar = User::where('name', $transaksi->nama_pembayar)->first();
-                $detailUser = Penghuni::where('id_user', $pembayar->id)->first();
-                // Pastikan transaksi berhasil sebelum update status
+
+                Log::info("Notifikasi Midtrans diterima:", $request->all());
+                Log::info("Transaksi yang ditemukan:", (array) $transaksi);
+
+                if (!$transaksi) {
+                    Log::error("Transaksi tidak ditemukan untuk order_id: {$request->order_id}");
+                    return response()->json(['message' => 'Transaksi tidak ditemukan'], 404);
+                }
+
+                // Ambil pembayar dan penghuni hanya jika transaksi bukan booking
+                $pembayar = null;
+                $detailUser = null;
+                if ($transaksi->jenis_transaksi != 'booking') {
+                    $pembayar = User::where('name', $transaksi->nama_pembayar)->first();
+                    $detailUser = $pembayar ? Penghuni::where('id_user', $pembayar->id)->first() : null;
+
+                    if (!$pembayar || !$detailUser) {
+                        Log::error("Data pengguna atau detail penghuni tidak ditemukan untuk order_id: {$request->order_id}");
+                        return response()->json(['message' => 'Data pengguna tidak ditemukan'], 404);
+                    }
+                }
+
+                // Update status transaksi
                 switch ($request->transaction_status) {
                     case 'settlement':
                     case 'capture':
                         $transaksi->update(['status' => 'berhasil']);
-                        if ($transaksi->jenis_transaksi == 'pelunasan_kamar') {
-                            $detailUser->terbayar += $request->gross_amount;
-                            $detailUser->save();
-                        } elseif ($transaksi->jenis_transaksi == 'laundry') {
-                            $detailUser->saldo_laundry += $request->gross_amount;
-                            $detailUser->save();
-                        } elseif ($transaksi->jenis_transaksi == 'kebersihan') {
-                            $detailUser->dana_kebersihan += $request->gross_amount;
-                            $detailUser->save();
+
+                        if ($transaksi->jenis_transaksi != 'booking') {
+                            if ($transaksi->jenis_transaksi == 'pelunasan_kamar') {
+                                $detailUser->terbayar += $request->gross_amount;
+                                $detailUser->save();
+                            } elseif ($transaksi->jenis_transaksi == 'laundry') {
+                                $detailUser->saldo_laundry += $request->gross_amount;
+                                $detailUser->save();
+                            } elseif ($transaksi->jenis_transaksi == 'kebersihan') {
+                                $detailUser->dana_kebersihan += $request->gross_amount;
+                                $detailUser->save();
+                            }
                         }
                         break;
+
                     case 'deny':
                     case 'expire':
                     case 'cancel':
