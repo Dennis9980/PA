@@ -32,9 +32,9 @@
                         </ul>
                     </div>
 
-                    <label for="countries" class="block mb-2 text-sm font-medium pt-5">Pilih tipe</label>
-                    <select id="countries"
-                        class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+                    <label for="pilihTipeMobile" class="block mb-2 text-sm font-medium pt-5">Pilih tipe</label>
+                    <select id="pilihTipeMobile"
+                        class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-side-bar-color focus:border-side-bar-color">
                         <option value="Pilih Tipe">Pilih Tipe</option>
                         @foreach ($tipeKamarKosong as $tipe)
                             @switch($tipe)
@@ -73,32 +73,32 @@
                             <input type="hidden" id="selectedTipeInput" name="modalTipeKamarInput" value="">
                             <input type="hidden" id="selectedHargaInput" name="modalHargaInput" value="">
                             <input type="hidden" id="dpInput" name="modalDpInput" value="2000000">
-                            <input type="text" name="jenis_transaksi" value="">
+                            <input type="hidden" name="jenis_transaksi" value="booking">
 
                             <label for="namaLengkap" class="block mb-2 text-sm font-medium">Nama Lengkap</label>
                             <input type="text" name="nama_pembayar" id="nama_lengkap"
-                                class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                                class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                                 placeholder="Nama Lengkap" required="">
 
                             <label for="noTelp" class="block mb-2 text-sm font-medium">No. Telepon</label>
                             <input type="text" name="no_telpon" id="no_telpon"
-                                class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                                class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                                 placeholder="No Telepon" required="">
 
                             <label for="emaill" class="block mb-2 text-sm font-medium">Email</label>
                             <input type="email" name="email" id="emaill"
-                                class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                                class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                                 placeholder="email@gmail.com" required="">
 
                             <label for="startDate" class="block mb-2 text-sm font-medium">Tanggal Mulai</label>
                             <input type="date" name="tgl_masuk" id="tgl_masuk"
-                                class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                                class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                                 required="">
                             <div class="flex flex-row gap-3 pt-4">
                                 <button id="cancelButton" type="button"
-                                    class="cancelButton px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Batal</button>
+                                    class="cancelButton text-white bg-gray-500 hover:bg-gray-700 font-medium rounded-lg text-sm w-full py-2.5 me-2 mb-2">Batal</button>
                                 <button type="submit"
-                                    class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Konfirmasi
+                                    class="text-white bg-side-bar-color hover:bg-menu-hover hover:text-side-bar-color font-medium rounded-lg text-sm w-full py-2.5 me-2 mb-2">Konfirmasi
                                     Booking</button>
                             </div>
                         </form>
@@ -213,7 +213,7 @@
 
                 <label for="countries" class="block mb-2 text-xl text-center font-bold pt-5">Booking Sekarang</label>
                 <select id="countries"
-                    class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">
+                    class="countries w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-side-bar-color focus:border-side-bar-color">
                     <option value="Pilih Tipe">Pilih Tipe</option>
                     @foreach ($tipeKamarKosong as $tipe)
                         @switch($tipe)
@@ -237,10 +237,7 @@
                 </select>
                 <p class="p-2">Harga per tahun: <span id="hargaKamar" class="hargaKamar"></span></p>
                 <div class="flex justify-center">
-                    {{-- <button id="bookingButton"
-                        class="bookingButton bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 disabled:bg-gray-500 disabled:cursor-not-allowed"
-                        disabled>Booking
-                        Now</button> --}}
+
                 </div>
                 <div id="bookingForm" class=" bookingForm hidden p-6 text-black lg:w-full">
                     <h1 class="text-xl text-center uppercase font-semibold">Isi Data Booking</h1>
@@ -255,22 +252,22 @@
                         <input type="hidden" name="jenis_transaksi" value="booking">
                         <label for="namaLengkap" class="block mb-2 text-sm font-medium">Nama Lengkap</label>
                         <input type="text" name="nama_pembayar" id="nama_lengkap"
-                            class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                            class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Nama Lengkap" required="">
 
                         <label for="noTelp" class="block mb-2 text-sm font-medium">No. Telepon</label>
                         <input type="text" name="no_telpon" id="no_telpon"
-                            class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                            class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="No Telepon" required="">
 
                         <label for="emaill" class="block mb-2 text-sm font-medium">Email</label>
                         <input type="email" name="email" id="emaill"
-                            class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                            class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="email@gmail.com" required="">
 
                         <label for="startDate" class="block mb-2 text-sm font-medium">Tanggal Mulai</label>
                         <input type="date" name="tgl_masuk" id="tgl_masuk"
-                            class="border border-green-500 text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5"
+                            class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             required="">
                         <div class="flex flex-row gap-3 pt-4">
                             <button id="cancelButton" type="button"

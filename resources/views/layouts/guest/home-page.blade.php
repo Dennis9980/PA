@@ -58,7 +58,6 @@
                     <!-- Gambar Pertama -->
                     <img src="/img/lp1.jpg" alt="Gambar 1" class="static rounded-box">
                     <h2 class="absolute bg-orange-500 rounded-tl-lg py-2 px-4 rounded-br-lg text-white">Tipe A</h2>
-                    <p class="absolute bg-orange-500 rounded-t-lg p-2 text-white">Rp. 1.000.000</p>
                 </div>
                 <!-- Kotak Kedua -->
                 <div class="carousel-item">

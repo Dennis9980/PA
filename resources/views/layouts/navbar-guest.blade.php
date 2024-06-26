@@ -1,6 +1,6 @@
 <div class="navbar bg-side-bar-color lg:px-24 xl:px-24">
     <div class="navbar-start">
-        <a href="{{ route('landingPage') }}">
+        <a href="{{ route('homePage') }}">
             <x-logo-with-name />
         </a>
     </div>

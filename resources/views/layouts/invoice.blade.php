@@ -62,7 +62,7 @@
             </div>
         </div>
       
-            <a href="{{ route('landingPage') }}" class="z-10">
+            <a href="{{ route('homePage') }}" class="z-10">
                 <button class="btn btn-primary z-10 mb-5">Back To Makos</button>
             </a>
 =
