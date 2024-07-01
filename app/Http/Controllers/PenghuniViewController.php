@@ -22,8 +22,6 @@ class PenghuniViewController extends Controller
 
         // Ambil tanggal hari ini dalam format yang sesuai dengan database
         $hariIni = Carbon::now();
-        $bulanIni = Carbon::now()->month;
-        $tahunIni = Carbon::now()->year;
 
         // Query untuk jadwal kebersihan terdekat yang belum selesai
         $jadwalKebersihan = Kebersihan::where('status_kebersihan', 'belum')

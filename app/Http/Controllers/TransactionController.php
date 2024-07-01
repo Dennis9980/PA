@@ -34,7 +34,7 @@ class TransactionController extends Controller
     {
         $transaksi = Transaction::where('jenis_transaksi', '!=', 'booking')
             ->search($request->input('keyword'))
-            ->paginate(6);;
+            ->paginate(6);
 
         return view('layouts.transaksi.data-transaksi', ['transaksi' => $transaksi, 'keyword' => $request->input('keyword')]);
     }
@@ -73,8 +73,8 @@ class TransactionController extends Controller
 
         // Validasi input berdasarkan jenis transaksi
         $rules = [
-            'nama_pembayar' => 'required|string',
-            'jumlah_bayar' => 'required|integer',
+            'nama_pembayar' => 'required',
+            'jumlah_bayar' => 'required|',
             'tujuan_bayar' => 'nullable|string',
         ];
 
@@ -88,11 +88,17 @@ class TransactionController extends Controller
         } else {
             $rules['kamar'] = 'required';
         }
+        $jmlh_bayar = preg_replace('/\D/', '', $request->input('jumlah_bayar'));
+        $jmlh_bayar = intval($jmlh_bayar);
+        $dpInput = preg_replace('/\D/', '', $request->input('modalDpInput'));
+        $dpInput = intval($dpInput);
+        $hargaInput = preg_replace('/\D/', '', $request->input('modalHargaInput'));
+        $hargaInput = intval($hargaInput);
 
         // Buat transaksi
         $transaksi = Transaction::create([
             'nama_pembayar' => $request->input('nama_pembayar'),
-            'jumlah_bayar' => $request->jenis_transaksi === 'booking' ? $request->input('modalDpInput') : $request->input('jumlah_bayar'),
+            'jumlah_bayar' => $request->jenis_transaksi === 'booking' ? $dpInput : $jmlh_bayar,
             'tujuan_bayar' => $request->input('tujuan_bayar'),
             'jenis_transaksi' => $request->jenis_transaksi,
             'status' => 'pending',
@@ -102,8 +108,8 @@ class TransactionController extends Controller
             'email' => $request->input('email', null), // Nilai default null jika bukan booking
             'tgl_masuk' => $request->jenis_transaksi === 'booking' ? $request->input('tgl_masuk') : null,
             'tipe_kos' => $request->jenis_transaksi === 'booking' ? $request->input('modalTipeKamarInput') : null,
-            'total_harga' => $request->jenis_transaksi === 'booking' ? $request->input('modalHargaInput') : null,
-            'dp' => $request->jenis_transaksi === 'booking' ? $request->input('modalDpInput') : null,
+            'total_harga' => $request->jenis_transaksi === 'booking' ? $hargaInput : null,
+            'dp' => $request->jenis_transaksi === 'booking' ? $dpInput : null,
         ]);
 
         // Konfigurasi Midtrans
@@ -155,7 +161,7 @@ class TransactionController extends Controller
             // Query untuk jadwal kebersihan terdekat yang belum selesai
             $jadwalKebersihan = Kebersihan::where('status_kebersihan', 'belum')
                 ->orderByRaw('ABS(DATEDIFF(tanggal_kebersihan, ?))', [$hariIni]) // Urutkan berdasarkan selisih hari terdekat
-                ->first(); // Ambil hanya satu hasil (jadwal terdekat)  
+                ->first(); // Ambil hanya satu hasil (jadwal terdekat)
 
             // Jika ada jadwal terdekat, format tanggalnya
             if ($jadwalKebersihan) {
@@ -233,6 +239,9 @@ class TransactionController extends Controller
                     case 'expire':
                     case 'cancel':
                         $transaksi->update(['status' => 'gagal']);
+                        break;
+                    default:
+                        Log::error('Terjasi error');
                         break;
                 }
             } catch (\Exception $e) {

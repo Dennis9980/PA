@@ -13,7 +13,7 @@
 <body class="bg-[#61876E] h-full">
     <div class="flex flex-col items-center justify-center lg:h-screen">
         <div class="bg-white p-4 rounded-2xl m-4 drop-shadow-2xl">
-            <h1 class="text-xl font-bold mb-5 text-center mb-6">Makos</h1>
+            <h1 class="text-xl font-bold text-center mb-6">Makos</h1>
                 <div class="flex flex-col gap-2 lg:flex-row lg:justify-between lg:gap-20">
                     <div>
                         <h3 class="font-semibold text-lg flex">Pemesan</h3>

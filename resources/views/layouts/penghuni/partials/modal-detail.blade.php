@@ -31,7 +31,7 @@
                     <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4">
                         <dt class="text-sm font-medium text-gray-500">Terbayar</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 ">
-                            {{ $penghuni->penghuni->terbayar ?? 'Belum di tambahkan' }}</dd>
+                            {{ number_format($penghuni->penghuni->terbayar, 0, ',', '.') ?? 'Belum di tambahkan' }}</dd>
                     </div>
                     <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4">
                         <dt class="text-sm font-medium text-gray-500">Kamar</dt>
@@ -75,7 +75,7 @@
                         <dt class="text-sm font-medium text-gray-500">Dana Kebersihan</dt>
                         
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2  flex flex-row items-center justify-between">
-                            {{ $penghuni->penghuni->dana_kebersihan ?? 'Belum di atur' }}
+                            {{ number_format($penghuni->penghuni->dana_kebersihan, 0, ',', '.') ?? 'Belum di atur' }}
                             <form action="{{ route('resetDanaKebersihan', $penghuni->id) }}" method="POST">
                                 @csrf
                                 <button class="text-white bg-side-bar-color hover:bg-menu-hover hover:text-side-bar-color font-medium rounded-lg text-sm px-5 py-2.5 me-2 ">Reset Dana</button>
@@ -85,7 +85,7 @@
                     <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4">
                         <dt class="text-sm font-medium text-gray-500">Saldo Laundry</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2 ">
-                            {{ $penghuni->penghuni->saldo_laundry ?? 'Belum di atur' }}</dd>
+                            {{ number_format($penghuni->penghuni->saldo_laundry, 0, ',', '.') ?? 'Belum di atur' }}</dd>
                     </div>
                     <div class="py-2 sm:py-3 sm:grid sm:grid-cols-3 sm:gap-4">
                         <dt class="text-sm font-medium text-gray-500">Alamat</dt>

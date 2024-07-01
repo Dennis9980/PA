@@ -35,7 +35,7 @@ class PenghuniController extends Controller
 
         // Validasi unique email dan username dengan mengecualikan user yang sedang diedit
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
             'phone' => ['nullable', 'string'],
@@ -46,6 +46,8 @@ class PenghuniController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        $nominal = preg_replace('/[^0-9]/', '', $request->terbayar);
+        $nominal = intval($nominal);
 
         $user->update([
             'name' => $request->name,
@@ -60,7 +62,7 @@ class PenghuniController extends Controller
                     'id_kamar_kos' => $request->id_kamar_kos,
                     'tanggal_mulai' => $request->tanggal_mulai,
                     'tanggal_selesai' => $request->tanggal_selesai,
-                    'terbayar' => $request->terbayar,
+                    'terbayar' => $nominal,
                     'phone' => $request->phone,
                     'address' => $request->address,
                 ]

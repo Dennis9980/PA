@@ -1,15 +1,10 @@
 <?php
 
-use App\Models\Laundry;
-use App\Http\Middleware\Penghuni;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\KelolaBooking;
-use App\Http\Controllers\KosController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LaundryController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\KamarKosController;
 use App\Http\Controllers\PenghuniController;
 use App\Http\Controllers\KebersihanController;
 use App\Http\Controllers\PenghuniViewController;
@@ -20,10 +15,6 @@ Route::get('/', function () {
     return view('layouts.guest.home-page');
 })->name('homePage');
 
-// Route untuk halaman booking
-// Route::get('/booking', function () {
-//     return view('layouts.guest.booking');
-// });
 
 Route::get('/booking', [BookingController::class, 'index'])->name('bookingGuest');
 Route::post('/checkout', [TransactionController::class, 'store'])->name('chechoutBooking');
@@ -35,7 +26,7 @@ Route::get('/invoice/{id}', [TransactionController::class, 'invoice'])->name('in
 Route::middleware('auth')->group(function () {
     // Route untuk halaman edit profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
@@ -77,9 +68,3 @@ Route::middleware(['auth', 'penghuni'])->group(function () {
     Route::post('/transaksi', [TransactionController::class, 'store'])->name('transaksiPembayaran');
     Route::get('/pembayaran/invoice/{id}', [TransactionController::class, 'invoicePenghuni'])->name('invoice.penghuni');
 });
-
-// Route untuk halaman booking dan proses checkout
-
-
-// Route untuk notification dari Midtrans
-// Route::post('/midtrans-callback', [BookingController::class, 'notificationHandler']);

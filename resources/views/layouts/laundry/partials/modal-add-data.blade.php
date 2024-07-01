@@ -49,9 +49,9 @@
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="price"
                                     class="block mb-2 text-sm font-medium text-gray-900 ">Harga</label>
-                                <input type="number" name="harga" id="price"
+                                <input type="text" name="harga" id="price"
                                     class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                                    placeholder="Total harga" required="" value="">
+                                    placeholder="Total harga" required="" value="" oninput="formatCurrency(this)">
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="price"
@@ -79,3 +79,16 @@
             </div>
         </div>
 </section>
+<script>
+    function formatCurrency(input) {
+        const value = input.value.replace(/[^0-9,-]/g, ''); // Remove non-numeric characters
+        const formattedValue = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0, // Set minimum decimal places
+            maximumFractionDigits: 2 // Set maximum decimal places
+        }).format(value); // Format the value to Indonesian currency
+
+        input.value = formattedValue;
+    }
+</script>

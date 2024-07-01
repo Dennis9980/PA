@@ -318,12 +318,12 @@
                     <tr>
                         <td>Uang Muka</td>
                         <td class="px-2">:</td>
-                        <td>{{ $transaksi->dp }}</td>
+                        <td>{{ number_format($transaksi->dp, 0, ',', '.') }}</td>
                     </tr>
                     <tr>
                         <td>Total Harga</td>
                         <td class="px-2">:</td>
-                        <td>{{ $transaksi->total_harga }}</td>
+                        <td>{{ number_format($transaksi->total_harga, 0, ',', '.') }}</td>
                     </tr>
                 </table>
 

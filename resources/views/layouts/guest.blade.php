@@ -9,7 +9,6 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="{{ config('services.midtrans.client_key') }}"></script>
-    <!-- Note: replace with src="https://app.midtrans.com/snap/snap.js" for Production environment -->
     <script src="https://kit.fontawesome.com/d2f94ceef2.js" crossorigin="anonymous"></script>
     <title>MaKos</title>
 

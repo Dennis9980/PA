@@ -118,9 +118,9 @@
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Total
                                     Bayar</label>
-                                <input type="number" name="jumlah_bayar" id="price"
+                                <input type="text" name="jumlah_bayar" id="price"
                                     class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                                    placeholder="Total Bayar" required="">
+                                    placeholder="Total Bayar" required="" oninput="formatCurrency(this)">
                             </div>
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 ">Jenis
@@ -165,7 +165,7 @@
                         <p class="text-gray-700">Berat: {{ $laundry->berat }}</p>
                         <p class="text-gray-700">Tanggal Masuk: {{ $laundry->tanggal_masuk }}</p>
                         <p class="text-gray-700">Tanggal Selesai: {{ $laundry->tanggal_selesai }}</p>
-                        <p class="text-gray-700">Total Harga: {{ $laundry->total_harga }}</p>
+                        <p class="text-gray-700">Total Harga: {{ number_format($laundry->total_harga, 0, ',', '.') }}</p>
                     </div>
                 @endforeach
             @else
@@ -221,7 +221,7 @@
                     <tr>
                         <td>Total Pembayarn</td>
                         <td class="px-2">:</td>
-                        <td>{{ $transaksi->jumlah_bayar }}</td>
+                        <td>{{ number_format($transaksi->jumlah_bayar, 0, ',', '.') }}</td>
                     </tr>
                     <tr>
                         <td>Tanggal Bayar</td>
@@ -283,4 +283,17 @@
             });
         @endif
     });
+</script>
+<script>
+    function formatCurrency(input) {
+        const value = input.value.replace(/[^0-9,-]/g, ''); // Remove non-numeric characters
+        const formattedValue = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0, // Set minimum decimal places
+            maximumFractionDigits: 2 // Set maximum decimal places
+        }).format(value); // Format the value to Indonesian currency
+
+        input.value = formattedValue;
+    }
 </script>

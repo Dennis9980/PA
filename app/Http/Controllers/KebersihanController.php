@@ -97,9 +97,11 @@ class KebersihanController extends Controller
         $dataKebersihan = Kebersihan::findOrfail($id);
         $pelanggan = User::where('name', $request->penghuni)->first();
 
+        $nominal = preg_replace('/\D/', '', $request->dana);
+        $nominal = intval($nominal);
         $dataKebersihan->update([
             'id_penghuni' => $pelanggan->id,
-            'dana_kebersihan' => $request->dana,
+            'dana_kebersihan' => $nominal,
             'keterangan' => $request->keterangan,
             'tanggal_kebersihan' => $request->tanggal_kebersihan,
         ]);

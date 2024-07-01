@@ -68,7 +68,7 @@
                         <label for="name" class="block mb-2 text-sm font-medium">Nama</label>
                         <input type="text" id="name"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                            placeholder="Tulis Nama Lengkap" name="name" value="{{ old('name', $penghuni->name )}}">
+                            placeholder="Tulis Nama Lengkap" name="name" value="{{ $penghuni->name }}">
                         @error('email')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
@@ -79,7 +79,7 @@
                         <select id="kos" name="id_kamar_kos"
                             class="bg-gray-50 text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5">
 
-                            <option value="{{ old('id_kamar_kos', $penghuni->penghuni->kamarKos->id) ?? 'Belum di set' }}" selected>
+                            <option value="{{ $penghuni->penghuni->kamarKos->id ?? 'Belum di set' }}" selected>
                                 {{-- @if (isset($pengghuni->penghuni->kamarKos)) --}}
                                 Kamar {{ $penghuni->penghuni->kamarKos->nomor_kamar ?? 'Pilih' }}
                                 @switch($penghuni->penghuni->kamarKos->tipe ?? 'belum di set')
@@ -131,7 +131,7 @@
                         <label for="name" class="block mb-2 text-sm font-medium">Username</label>
                         <input type="text" id="name"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                            placeholder="Tulis Kamar Berapa" name="username" value="{{ old('username', $penghuni->username) }}">
+                            placeholder="Tulis Kamar Berapa" name="username" value="{{ $penghuni->username }}">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name" class="block mb-2 text-sm font-medium">No
@@ -140,19 +140,21 @@
                         <input type="text" id="name"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Tulis No Telepon" name="phone"
-                            value="{{ old('phone', $penghuni->penghuni->phone) ?? 'belum di atur' }}">
+                            value="{{ $penghuni->penghuni->phone ?? 'belum di atur' }}">
                     </div>
                     <div class="col-span-1">
                         <label for="name" class="block mb-2 text-sm font-medium">Email</label>
                         <input type="text" id="name"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                            placeholder="Tulis Email" name="email" value="{{ old('email',$penghuni->email) }}">
+                            placeholder="Tulis Email" name="email" value="{{ $penghuni->email }}">
                     </div>
                     <div class="col-span-1">
                         <label for="terbayar" class="block mb-2 text-sm font-medium">Terbayar</label>
-                        <input type="number" id="terbayar"
+                        <input type="text" id="terbayar"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                            placeholder="Uang Kos Terbayar" name="terbayar" value="{{ old('terbayar',$penghuni->penghuni->terbayar) ?? 'Belum di set' }}">
+                            placeholder="Uang Kos Terbayar" name="terbayar"
+                            value="{{ number_format($penghuni->penghuni->terbayar, 0, ',', '.') ?? 'Belum di set' }}"
+                            oninput="formatCurrency(this)">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name" class="block mb-2 text-sm font-medium">Tanggal
@@ -160,7 +162,7 @@
                         <input type="date" id="name"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Tulis Email"
-                            value="{{ old('tanggal_mulai',$penghuni->penghuni->tanggal_mulai) ?? 'Belum di atur' }}" name="tanggal_mulai">
+                            value="{{ $penghuni->penghuni->tanggal_mulai ?? 'Belum di atur' }}" name="tanggal_mulai">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         <label for="name" class="block mb-2 text-sm font-medium">Tanggal
@@ -168,12 +170,12 @@
                         <input type="date" id="name" name="tanggal_selesai"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
                             placeholder="Tulis Email"
-                            value="{{ old('tanggal_selesai',$penghuni->penghuni->tanggal_selesai) ?? 'Belum di atur' }}">
+                            value="{{ $penghuni->penghuni->tanggal_selesai ?? 'Belum di atur' }}">
                     </div>
                     <div class="col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium">Address</label>
                         <textarea name="address" id="name" cols="10" rows="3"
-                            class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5">{{ old('address',$penghuni->penghuni->address) ?? 'belum di atur' }}</textarea>
+                            class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5">{{ $penghuni->penghuni->address ?? 'belum di atur' }}</textarea>
                     </div>
                 </div>
                 <div class="flex w-full  justify-center items-center p-5">
@@ -184,3 +186,16 @@
         </div>
     </div>
 </div>
+<script>
+    function formatCurrency(input) {
+        const value = input.value.replace(/[^0-9,-]/g, ''); // Remove non-numeric characters
+        const formattedValue = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0, // Set minimum decimal places
+            maximumFractionDigits: 2 // Set maximum decimal places
+        }).format(value); // Format the value to Indonesian currency
+
+        input.value = formattedValue;
+    }
+</script>

@@ -23,8 +23,6 @@ class BookingController extends Controller
             ->get() // Mengambil semua tipe kamar yang memiliki setidaknya satu kamar kosong
             ->pluck('tipe');
 
-        // dd($tipeKamarKosong);
-
         return view('layouts.guest.booking', compact('tipeKamarKosong', 'allTipeKamar'));
     }
 

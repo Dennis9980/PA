@@ -36,7 +36,7 @@
                             Dana</label>
                         <input type="number" name="dana" id="price"
                             class="bg-gray-50  text-sm rounded-lg focus:ring-side-bar-color focus:border-side-bar-color block w-full p-2.5"
-                            placeholder="Total Dana" required="" value="{{ $kebersihan->dana_kebersihan }}">
+                            placeholder="Total Dana" required="" value="{{ number_format($kebersihan->dana_kebersihan, 0, ',', '.') }}">
                     </div>
                     <div class="col-span-1">
                         <label for="tanggal"

@@ -43,6 +43,8 @@ class LaundryController extends Controller
     public function store(Request $request)
     {
 
+        
+
         $validator = Validator::make($request->all(), [
             'penghuni' => ['required'],
             'berat' => ['required'],
@@ -56,17 +58,18 @@ class LaundryController extends Controller
         }
 
         $penghuni = User::where('name', $request->penghuni)->first();
-
+        $nominal = preg_replace('/\D/', '', $request->harga);
+        $nominal = intval($nominal);
         Laundry::create([
             'id_penghuni' => $penghuni->id,
             'berat' => $request->berat,
-            'total_harga' => $request->harga,
+            'total_harga' => $nominal,
             'tanggal_masuk' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai
         ]);
         
         $updateSaldo = Penghuni::where('id_user', $penghuni->id)->first();
-        $updateSaldo->saldo_laundry -= $request->harga;
+        $updateSaldo->saldo_laundry -= $nominal;
         $updateSaldo->save();
 
 
@@ -101,10 +104,12 @@ class LaundryController extends Controller
         $laundry = Laundry::findOrFail($id);
         $pelanggan = User::where('name', $request->penghuni)->first();
 
+        $nominal = preg_replace('/\D/', '', $request->harga);
+        $nominal = intval($nominal);
         $laundry->update([
             'id_penghuni' => $pelanggan->id,
             'berat' => $request->berat,
-            'total_harga' => $request->harga,
+            'total_harga' => $nominal,
             'tanggal_masuk' => $request->tanggal_mulai,
             'tanggal_selesai' => $request->tanggal_selesai
         ]);

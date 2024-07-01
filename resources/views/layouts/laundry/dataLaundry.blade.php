@@ -64,7 +64,7 @@
                                             {{ $laundry->berat }}
                                         </td>
                                         <td class="px-6 py-6">
-                                            {{ $laundry->total_harga }}
+                                            {{ number_format($laundry->total_harga, 0, ',', '.') }}
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $laundry->tanggal_masuk ?? 'Tidak mencantumkan' }}

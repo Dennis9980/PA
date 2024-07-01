@@ -12,7 +12,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
                 </svg>
             </div>
-            <ul tabindex="0"
+            <ul
                 class="menu menu-sm uppercase dropdown-content mt-4 z-10 right-0 p-2 shadow bg-base-100 rounded-box w-52">
                 <a href="#tentang-kami"
                     class="flex items-center p-2 rounded-md hover:bg-menu-hover hover:text-side-bar-color group">
